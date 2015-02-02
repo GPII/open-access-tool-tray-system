@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>OATTS Widget and Provider Chooser</title>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" type="text/css" href="menus.css">
+
+<!-- <link rel="stylesheet" type="text/css" href="normalize.css" /> -->
+<script src="server.js"></script>
+</head>
+
+<body data-window-type="main_window">
+
+<div id="menu" style="display:none">
+	<div id="menubody">
+		<ul id="menulist">
+		</ul>
+	</div>
+	<div id="menubottom"></div>
+</div>
+
+<!--Added partition to webview to allow cookies to persist -->
+<!-- <div id="content" onresize="mainContentResized()"> -->
+<div id="content">
+	<webview id="web-page-frame" partition="persist:oattstool" style="width:100%; height:100%;" tabindex="0"></webview>
+</div>
+
+<script src="titlebar.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+<Files ~ "(.xml|.json)">
+	Order deny,allow
+	Deny from all
+</Files>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>Assistance On Demand Chat Providers</name>
+	  <type>provider</type>
+	  <full_description>This widget displays a box of the Assistance On Demand Chat providers.</full_description>
+	  <tool_tip id="employee01">Assistance On Demand Chat Providers</tool_tip>
+	  <developer>Trace Research &amp; Development Center</developer>
+	  <license>LGPL</license>
+	  <hyperlink></hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet.
+	  </requirements>
+	</widget>

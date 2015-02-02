@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>About OATTS</name>
+	  <type>provider</type>
+	  <full_description>This widget displays information about this OATTS utility program.</full_description>
+	  <tool_tip id="employee01">Information about OATTS</tool_tip>
+	  <developer>Trace Research &amp; Development Center</developer>
+	  <license>LGPL</license>
+	  <hyperlink></hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet.
+	  </requirements>
+
+	</widget>

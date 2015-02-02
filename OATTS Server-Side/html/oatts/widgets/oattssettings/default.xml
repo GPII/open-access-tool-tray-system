@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>OATTS Settings</name>
+	  <type>changer</type>
+	  <full_description>Allows changing of OATTS settings.</full_description>
+	  <tool_tip id="employee01">Open OATTS Settings Page</tool_tip>
+	  <developer>Trace Research &amp; Development Center</developer>
+	  <license>LGPL</license>
+	  <hyperlink>#</hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet.
+	  </requirements>
+
+	</widget>

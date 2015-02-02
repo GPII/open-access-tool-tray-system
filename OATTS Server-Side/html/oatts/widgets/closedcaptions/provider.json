@@ -1,0 +1,17 @@
+{
+"widgetName": "closed_captions",
+"provider": [
+
+{
+"id": "1", 
+"name": "RtF CCC Server", 
+"url": "http://ccc.raisingthefloor.org" 
+},
+
+{"id": "2", 
+"name": "Captions Forever", 
+"url": "http://captionsforever.com" 
+}
+
+]
+}

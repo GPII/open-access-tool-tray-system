@@ -1,0 +1,701 @@
+
+#loginhead {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+
+#guestdiv {
+
+}
+
+
+#widgetgrp {
+	width: 100%;
+	
+	/*### for testing 
+	font-family: Arial, "Trebuchet MS", "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	*/
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	
+	font-size: 100%;
+}
+
+
+body :focus {
+	outline: #ff8000 solid;
+	outline-width: 0.25em;   /*### for fall-back compatibility */
+	outline-width: calc(2px + 0.15em);
+}
+
+
+/********************************************************/
+/* overrides of jquery-ui.css for dialogs and tooltips  */
+/********************************************************/
+
+
+
+
+.ui-widget {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-size: 1em;   /*### was 1.1em */
+}
+
+.ui-widget-overlay {
+	opacity: .5;   /*### was .3 */
+	filter: Alpha(Opacity=50);   /*### was Alpha(Opacity=30) */
+	z-index: 5001;
+}
+
+.ui-front {
+	z-index: 5002;
+}
+
+.ui-widget-content, .ui-widget-content a  {
+	color: black;   /*### was #222222 */
+}
+
+.ui-widget-header {
+	border: 0.15em solid #2e6e9e;   /*### was #4297d7 */
+	background: #3273A5;   /*### was #5c9ccc */
+}
+
+.ui-widget-content label {
+	font-weight: bold;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	border-width: 0.15em 0 0 0;
+	margin-top: .1em;   /*### was .5em */
+	padding: .3em 1em .3em .4em;   /*### was .3em 1em .5em .4em */
+}
+
+.ui-dialog .ui-dialog-buttonpane button {
+	margin: .5em .6em .4em 0;   /*### was .5em .4em .5em 0 */
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	background: linear-gradient(to bottom, #F0F8FC, #C0E0F0);
+}
+
+.ui-button-text-only .ui-button-text {
+	padding: 0.1em 0.75em 0.3em 0.75em;   /*### was .4em 1em */
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-state-default {
+	color: #1b547e;   /*### was #2e6e9e */
+}
+
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+	color: #1b547e;   /*### was #2e6e9e */
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-state-hover {
+	color: #133a57;   /*### was #1d5987 */
+	background: linear-gradient(to bottom, #FFFFFF, #D0F0FF);
+}
+
+.ui-dialog .ui-dialog-buttonpane .ui-state-active {
+	color: black;   /*### was #1d5987 */
+	border-color: black;
+	background: linear-gradient(to bottom, #DCF4FF, #FFFFFF);
+}
+
+.ui-tooltip {
+	max-width: 20em;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-size: 100%;
+	font-weight: bold;
+	padding: 0.1em 0.4em 0.2em 0.4em;
+	background: #fff4e8;   /*### was #e8f4ff */
+	border: 0.15em solid #ffb060;
+	border-radius: 0.4em;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+body .ui-tooltip {
+	border-width: 2px;   /*### for fall-back compatibility */
+	border-width: calc(1.5px + 0.075em);
+}
+
+/********************************************************/
+/* end of jquery-ui.css overrides                       */
+/********************************************************/
+
+
+/********************************************************/
+/* additions and other overrides for dialog display     */
+/********************************************************/
+
+fieldset label {
+	display: block;
+}
+
+input.text {
+	margin-top: 0.2em;
+	margin-bottom: 0.75em;
+	width: 95%;
+	padding: 0.4em;
+}
+
+fieldset {
+	padding: 0;
+	border: 0;
+	margin-top: 1.25em;
+}
+
+.requiredfield {
+	color: #b00000;
+	font-size: 0.8em;
+	font-weight: bold;
+	padding-left: 2em;
+}
+
+.validateTips {
+	color: #b00000;
+	font-weight: bold;
+}
+
+#iconpathlabel {
+	color: black;
+	font-size: 1.0em;
+	font-weight: bold;
+}
+
+#iconpathtext {
+	padding-left: 0.75em;
+	color: #008000;
+	font-size: 0.9em;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+
+#bookmark-dialog-widget {
+	float: left;
+	background-color: black;
+	width: 5em;
+	height: 3em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin: 0.25em;
+	margin-right: 1em;
+}
+
+#imgpicker {
+	display: inline;
+	margin-top: 2.5em;
+	margin-bottom: 0.5em;
+	padding-top: 0.1em;
+	padding-bottom: 0.15em;
+	font-weight: bold;
+}
+
+/********************************************************/
+/* end of dialog display additions and overrides        */
+/********************************************************/
+
+
+.regMsg {
+	color: red;
+}
+
+
+#iframe-container {
+	position: fixed;
+	top: 0;
+	/*
+	left: 0;
+	right: 0;
+	*/
+	width: 100%
+}
+
+
+#providerIframe, #settingsIframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 5px;
+	/*### background-color: white; */
+}
+
+
+#providercontent {
+	position: absolute;
+	left: 1.0em;
+	right: 1.0em;
+}
+
+
+.settingsTitle {
+	font-size: 1.5em;
+	max-width: 10em;
+	text-align: center;
+	color: #0000B2;
+	margin-top: 20px;   /*### for fall-back compatibility */
+	margin-top: calc(8px + 0.15em);
+}
+
+
+#settingscontent {
+	position: absolute;
+	left: 0.5em;
+	right: 0.5em;
+}
+
+
+#oatts-settings {
+	font-size: 1.0em;
+	font-weight: bold;
+	margin-left: 0.75em;
+}
+
+.settingsCheckbox {
+	height: 1.0em;
+	width: 1.0em;
+}
+
+
+#oatts-settings-buttons {
+	margin-top: 1.5em;
+	margin-left: 1.0em;
+}
+
+
+#tray-divider {
+	position: absolute;
+	top: -5px;
+	left: 0;
+	right: 0;
+	height: 3px;
+	cursor: ns-resize;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+	background-color: #d0d8e0;
+	z-index: 1003;	
+}
+
+
+#tray-container {
+	position: fixed;
+	width: 100%;
+	min-height: 32px;
+	display: block;
+	background-color: #202020;
+	overflow: visible;
+	z-index: 1002;
+}
+
+
+#tray-container a {
+	text-decoration: none;
+}
+
+
+#tray-container a img {
+	border: 0;
+}
+
+
+#tray-widgets-container { 
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding-left: 0.2em;
+	padding-right: 0.2em;
+	
+	/*
+	font-family: Arial, "Trebuchet MS", "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	*/
+	font-size: 100%;
+	
+	background-color: transparent;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: 2;
+}
+
+
+.widget-name, .tray-widget-name, .tray-widget-bookmark {
+	position: relative;
+	font-size: 85%;
+	padding-top: 0.2em;
+	line-height: 1.2em;
+	text-align: center;
+	color: white;
+	word-wrap: break-word;
+}
+
+
+.tray-widget-name {
+	display: none;
+}
+
+
+/*
+.tray-bookmark-icons {
+	display: block;
+}
+*/
+
+.tray-widget-icon, .widget-picker-icon {
+	display: block;
+	width: 4em;
+	height: 4em;
+	margin-left: 0.5em;
+}
+
+
+.widget-picker-icon {
+	margin-left: 1.25em;
+}
+
+
+.tray-shortcut-icon {
+	display: block;
+	width: 1.25em;
+	height: 1.25em;
+	margin-top: -1em;
+	margin-left: 0.75em;
+}
+
+
+.tray-bookmark-icon {
+	display: block;
+	width: 2.75em;
+	height: 2.75em;
+	margin-left: 1.5em;
+}
+
+
+.closepopupbutton {
+	position: absolute;
+	
+	position: static;
+	float: right;
+	
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-family: Verdana, "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;	
+	
+	font-size: 0.9em;
+	font-weight: bold;
+	padding-bottom: 0.1em;
+	padding-left: 0.4em;
+	padding-right: 0.35em;
+	
+	
+	margin-top: 0.1em;
+	margin-left: 0.75em;
+	margin-right: 0.4em;
+	
+	
+	color: black;
+	border: 0.2em solid #D0A000;
+	border-radius: 0.45em;
+	background: linear-gradient(to bottom, #F8F000, #E0C000);
+	cursor: pointer;
+}
+
+
+.closepopupbutton:hover {
+	border-color: #C08000;
+	background: linear-gradient(to bottom, #FFFFC0, #ECD800);
+}
+
+
+.closepopupbutton:active {
+	border-color: #804000;
+	background: linear-gradient(to bottom, #F4E800, #FFFFC0);
+}
+
+
+.closepopupbuttonicon {
+	display: inline-block;
+	height: 1.0em;
+	padding-left: 0.4em;
+	margin-bottom: -0.1em;
+}
+
+
+#widget-picker-title, #iconpicker-title {
+	position: static;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-weight: bold;
+	font-size: 125%;
+	margin-top: 0.2em;
+	margin-bottom: 0.3em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	text-align: center;
+	color: white;
+}
+
+
+#picker-top-line {
+	position: static;
+	margin-top: 0.2em;
+	margin-left: 0.4em;
+	margin-right: 0.4em;
+	height: 0.15em;   /*### for fall-back compatibility */
+	height: calc(1px + 0.1em);
+	background-color: white;
+ }
+
+
+ /*### START new section for Bookmark Icon Picker window */
+ 
+ #iconpicker {
+ 	position: fixed;
+	width: 100%;
+	height: 100%;
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	font-size: 100%;	
+	color: white;
+	background-color: #202020;
+}
+
+
+#iconpicker a {
+	text-decoration: none;
+}
+
+
+/*
+#iconpicker-title {
+ 	position: static;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-weight: bold;
+	font-size: 125%;
+	margin-top: 0.2em;
+	margin-bottom: 0.3em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	text-align: center;
+}
+*/
+ 
+ 
+#close-iconpicker {
+/*
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+*/
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+ }
+ 
+ 
+#iconpicker-window {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+
+#iconpicker-window-container {
+	position: absolute;
+	top: 1px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 0.5em 0.25em 1em 0.25em;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+
+.iconpicker-widget {
+	float: left;
+	width: 7em;
+	height: 7em;
+	margin: 0.75em;
+	text-align: center;
+}
+
+
+.iconpicker-link {
+	position: relative;
+	display: block;
+	max-height: 7em;
+	padding: 0.5em 0.25em 0.25em 0.25em;
+	color: white;	
+	overflow: hidden;
+}
+
+
+.iconpicker-bookmark-icon {
+	display: block;
+	width: 2.75em;
+	height: 2.75em;
+	margin-left:  2.25em;
+}
+
+
+.iconpicker-shortcut-icon {
+	display: block;
+	width: 1.25em;
+	height: 1.25em;
+	margin-top: -1em;
+	margin-left: 1.5em;
+}
+
+
+.iconpicker-filename {
+	position: relative;
+	font-size: 85%;
+	line-height: 1.2em;
+	text-align: center;
+	padding-top: 0.2em;
+	word-wrap: break-word;
+}
+
+/*### END new section for Bookmark Icon Picker window */
+ 
+ 
+/*### added */
+#tray-widgets-picker {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	background-color: #384048;	 /*### added */
+}
+
+
+#tray-widgets-picker a {
+	text-decoration: none;
+}
+
+
+#tray-widgets-window {
+	position: absolute;
+	top: 33px;
+	width: 100%;
+	bottom: 5px;
+	color: white;
+	font-size: 100%;
+	text-align: center;
+	z-index: 1005;
+	display: none;
+}
+
+
+#tray-widgets-window a img {
+	border: 0;
+}
+
+
+#tray-widgets-window-container {
+	position: absolute;
+	top: 1px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 0.25em;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+
+.add-remove-btn {
+	position: relative;
+	font-size: 85%;
+	line-height: 1.25em;
+	padding-top: 0;
+	padding-bottom: 0.15em;
+	padding-left: 0.3em;
+	padding-right: 0.3em;
+	/*
+	font-weight: normal;
+	*/
+	text-align: center;
+	color: white;
+	border: 0.15em solid white;
+	border-radius: 0.47em;
+	background: linear-gradient(to bottom, #C02020, #802020);
+	cursor: pointer;
+	z-index: 9;
+}
+
+
+.add-remove-btn:hover, .add-remove-btn:focus {
+	border-color: #D8D8D8;
+	background: linear-gradient(to bottom, #F00000, #B00000);
+}
+
+
+.add-remove-btn:active {
+	border-color: #B0B0B0;
+	background: linear-gradient(to bottom, #B00000, #F00000);
+}
+
+
+.remove-btn {
+	width: 5.35em;
+	margin-top: -0.45em;
+	margin-bottom: -1.25em;
+	margin-left: 0.25em;
+	display: none;
+	z-index: 9;
+}
+
+
+.tray-widget {
+	float: left;
+	width: 5em;
+	height: 8.15em;
+	margin: 0.75em 0.5em 1em 0.5em;
+	background-color: transparent;
+}
+
+
+.tray-widget-link {
+	position: relative;
+	max-height: 8em;
+	padding-top: 0.25em;
+	padding-bottom: 0.25em;
+	display: block;
+	overflow: hidden;
+}
+
+
+.tray-window-widget {
+	float: left;
+	width: 7em;
+	height: 8.15em;
+	margin: 0.75em;
+	text-align: center;
+}
+
+
+.widget-add-button {
+	width: 7.45em;
+	margin-top: -0.45em;
+	margin-bottom: -1.25em;
+	margin-left: 0.4em;
+	display: block;
+	opacity: 0;
+	z-index: 1;
+}
+
+
+.showflag {
+	z-index: 9;
+	opacity: 1;
+}
+
+
+.tray-window-widget-link {
+	position: relative;
+	display: block;
+	max-height: 8.15em;
+	padding: 0.25em;
+	overflow: hidden;
+	z-index: 5;
+}
+
+

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>TOHRU</name>
+	  <type>link</type>
+	  <full_description>This widget displays a box of the Trace Online Hand Raising Utility.</full_description>
+	  <tool_tip id="employee01">Trace Online Hand Raising Utility</tool_tip>
+	  <developer>Trace Research &amp; Development Center</developer>
+	  <license>LGPL</license>
+	  <hyperlink>http://tohru.trace.wisc.edu/</hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet.
+	  </requirements>
+
+	</widget>
