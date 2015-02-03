@@ -1,0 +1,354 @@
+
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-family: Verdana, "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;	
+	font-size: 100%;
+}
+
+
+.providerTitle {
+	font-size: 1.5em;
+	max-width: 35em;
+	text-align: center;
+	color: #0000B2;
+	margin-top: 20px;   /*### for fall-back compatibility */
+	margin-top: calc(8px + 0.15em);
+}
+
+
+.provFontSize {
+	position: static;
+	margin-top: 0.15em;
+	margin-left: 0.5em;
+	margin-right: 0.5em;
+	text-align: right;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+
+.disabledZoomSetting {
+	cursor: default;
+	opacity: 0.4;
+}
+
+
+#top-line {
+	position: static;
+	margin-top: 0.1em;
+	margin-left: 0.3em;
+	margin-right: 0.3em;
+	height: 0.15em;   /*### for fall-back compatibility */
+	height: calc(1px + 0.1em);
+	background-color: black;
+ }
+
+
+.favhead  {
+	color: #0000B2;
+	margin-top: 1.0em;
+	font-size: 1.3em;
+}
+
+
+#fspicon { 
+	display: inline-block;
+	height: 0.9em;
+	margin-left: 0.5em;
+	margin-bottom: 0.1em;	
+	/*### background-color: yellow; */
+}
+
+
+.providershead  {
+	color: #0000B2;
+	margin-top: 1.0em;
+	font-size: 1.3em;
+}
+
+
+.provbutton {
+	padding-top: 0.05em;
+	padding-bottom: 0.1em;
+	padding-left: 0.4em;
+	padding-right: 0.5em;
+	color: black;
+	
+	font-weight: normal;
+
+	border: 0.14em solid #A0D0E8;
+	border-radius: 0.4em;
+	background: linear-gradient(to bottom, #F0F8FC, #C0E0F0);
+}
+
+
+.provbutton:hover, .provbutton:focus {
+	border-color: #80C0E0;
+	background: linear-gradient(to bottom, #FFFFFF, #D0F0FF);
+}
+
+
+.provbutton:active {
+	color: #400000;
+	border-color: #40A0D0;
+	background: linear-gradient(to bottom, #DCF4FF, #FFFFFF);
+}
+
+
+.provbuttonicon {
+	display: inline-block;
+	height: 1.0em;
+	padding-right: 0.25em;
+	margin-bottom: -0.1em;
+}
+
+
+#insbutton {
+	display: inline-block;
+	margin-left: 2.0em;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	padding-top: 0.1em;
+	padding-bottom: 0.2em;
+	border-width: 0.13em;
+}
+
+
+/****************************/
+/****************************/
+
+
+#favlist {
+	margin-left: 1.0em;
+	list-style-type: none;
+	-webkit-padding-start: 0;
+}
+
+
+#favlist li {
+	max-width: 50em;   /*### added to test */
+	margin-top: 0.4em;
+	padding-left: 2.0em;
+	border: 0.15em solid #F2EFEC;
+	background-color: #F2EFEC;
+}
+
+
+/*  padding vs margin:  padding helps with sortable routine*/
+
+
+#favlist li .listicon {
+	height: 1.2em;
+	margin-left: -1.25em;
+	padding-right: 0.55em;
+	margin-bottom: -0.2em;
+}
+
+
+.flexcontainer {
+	width: 100%;
+	display: -webkit-inline-flex;
+	-webkit-flex-wrap: wrap;
+}
+
+
+.favinfo {
+	color: #0000E0;	
+	font-size: 1.0em;
+	margin-bottom: 0.2em;
+	width: 6em;
+	-webkit-flex: 1 1 auto;
+	margin-right: auto;
+}
+
+
+.favlink {
+	/*
+	display: inline-block;
+	*/
+	color: #0000E0;	
+	font-size: 1.0em;
+	word-break: break-word;
+}
+
+
+/*### added class */
+.favurldiv {
+	margin-left: 1.0em;
+}
+
+
+.favurl {
+	color: #008000;
+	font-size: 0.9em;
+	word-break: break-all;
+}
+
+
+.openfavactions  {
+	margin-left: 1.0em;
+	margin-right: 0.0em;
+	font-size: 0.9em;
+	width: 4.5em;
+	text-align: center;	
+	-webkit-flex: 0 0 auto;
+	-webkit-align-self: flex-start;
+}
+
+
+.favactionbar  {
+	padding-right: 0.5em;
+}
+
+
+.flexAction1, .flexAction2, .flexAction3 {
+	display: -webkit-inline-flex;
+	-webkit-flex: 0 1 auto;
+}
+
+
+.flexAction5 {
+	margin-left: 0.4em;
+	display: -webkit-inline-flex;
+	-webkit-flex-wrap: wrap;
+	//-webkit-flex: 0 0 auto;
+}
+
+
+.favactions  {
+	font-size: .9em;
+	margin-top: 0.4em;
+	margin-bottom: 0.1em;
+	margin-left: 0.6em;
+}
+
+
+/**************************/
+/*end fav*/
+/**************************/
+
+
+#providerlist {
+	margin-left: 1.0em; 
+	list-style-type: none;
+	-webkit-padding-start: 0;
+}
+
+
+#providerlist li {
+	max-width: 51.25em;   /*### added to test */
+	margin-top: 0.4em;
+	padding-left: 0.75em;
+	border: 0.15em solid #F2EFEC;
+	background-color: #F2EFEC;
+}
+
+
+.providerinfo {
+	color: #0000E0;	
+	font-size: 1.0em;
+	margin-bottom: 0.3em;
+	width: 6em;
+	-webkit-flex: 1 1 auto;
+	margin-right: auto;
+}
+
+
+.providerlink {
+	color: #0000E0;	
+	font-size: 1.0em;
+	word-break: break-word;
+}
+
+
+/*### added class */
+.providersurldiv {
+	margin-top: -0.2em;
+	margin-left: 1.0em;
+}
+
+
+.providersurl {
+	color: #008000;
+	font-size: 0.9em;
+	word-break: break-all;
+}
+
+
+.provideractions {
+	display: -webkit-inline-flex;
+	-webkit-flex-wrap: wrap;
+	
+	-webkit-flex: 0 1 auto;   /*### */
+	
+	margin-left: 0.5em;
+}
+
+
+.providersaction {
+	font-size: 0.9em;
+	margin-top: 0.0em;
+	margin-bottom: 0.3em;
+	margin-left: 0.6em;
+	-webkit-flex: 0 0 auto;
+	-webkit-align-self: flex-start;
+}
+
+
+/**************************/
+/*end providers*/
+/**************************/
+
+
+/*### does not appear to exist anywhere
+#favoritesicon { 
+	background-color: yellow;
+}
+*/
+
+
+/*### does not appear to exist anywhere
+#deleteicon1, #deleteicon2 { 
+	//background-color: pink;
+}
+*/
+
+
+/*  padding vs margin:  padding helps with sortable routine*/
+
+
+/*### does not appear to exist anywhere
+.newProv {
+	background-color: white;
+}
+*/
+
+
+/*### does not appear to exist anywhere
+.addProvDiv {
+	width: 27em;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	margin-right: 20px;
+	margin-left: 20px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 1px solid #0000B2;
+	border-radius: 10px;
+	background-color: white;
+}
+*/
+
+
+/*### does not appear to exist anywhere
+.insdivtitle {
+	color: #0000B2;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 2em;
+	font-weight: bold;
+	font-size: 1.15em;
+}
+

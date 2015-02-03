@@ -1,0 +1,19 @@
+{
+"pageHeader" : "Trace Crowd Caption Correction", 
+"widgetName": "trace_crowd_caption_correction",
+"provider": [
+
+{
+"id": "1", 
+"name": "RtF CCC Sender", 
+"url": "http://ccc.raisingthefloor.org/cccentry.php" 
+},
+
+{
+"id": "2", 
+"name": "RtF CCC Server", 
+"url": "http://ccc.raisingthefloor.org" 
+}
+
+]
+}

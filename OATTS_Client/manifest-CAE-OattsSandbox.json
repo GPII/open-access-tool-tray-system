@@ -1,0 +1,29 @@
+{
+	"name": "CAE Sandbox OATTS Client beta",
+	"version": "2.3",
+	"manifest_version": 2,
+	"minimum_chrome_version": "38.0",
+	"app": {
+		"background": {
+			"scripts": [
+				"background.js"
+			]
+		}
+	},
+	"icons": { 
+		"128": "images/icon_128.png"
+	},
+	"externally_connectable": {
+		"matches": [
+			"*://oatts.local/*",
+			"*://oatts.trace.wisc.edu/*",
+			"*://oattssandbox.trace.wisc.edu/*"
+		]
+	},
+	"permissions": [
+		"contextMenus",
+		"webview",
+		"alwaysOnTopWindows",
+		"storage"
+	]
+}

@@ -1,0 +1,152 @@
+html {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	z-index: 1;
+}
+
+
+/*### added */
+body :focus {
+	outline: #ff8000 solid 3px;
+}
+
+
+/*
+::-webkit-scrollbar-thumb {
+	display: none;
+}
+*/
+
+div#content {
+	position: fixed;
+	top: 25px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	border: 3px solid;
+	border-top: none;
+}
+
+#full-titlebar , #full-titlebar-screen {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 25px;
+	font-size: 10px;
+	/*### -webkit-user-select: none; */
+	-webkit-app-region: drag;
+	z-index: 1;
+}
+
+
+#mini-titlebar, #mini-titlebar-screen {
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 15px;
+	font-size: 6px;
+	/*### -webkit-user-select: none; */
+	-webkit-app-region: drag;
+	z-index: 1;
+}
+
+
+#full-titlebar-screen, #mini-titlebar-screen {
+	position: absolute;
+	z-index: 5002;
+}
+
+
+.full-titlebar-buttons {
+	position: absolute;
+	margin-top: 4px;
+	height: 17px;
+	-webkit-app-region: no-drag;
+}
+
+.mini-titlebar-buttons {
+	position: absolute;
+	margin-top: 2px;
+	height: 13px;
+	-webkit-app-region: no-drag;
+}
+
+#full-titlebar-icon-button, #mini-titlebar-icon-button {
+	left: 4px;
+}
+
+#full-titlebar-settings-button, #mini-titlebar-settings-button {
+	left: 35px;
+}
+
+#full-titlebar-back-button, #mini-titlebar-back-button {
+	left: 66px;
+}
+
+#full-titlebar-forward-button, #mini-titlebar-forward-button {
+	left: 93px;
+}
+
+#full-titlebar-refresh-button, #mini-titlebar-refresh-button {
+	left: 120px;
+}
+
+#full-titlebar-text {
+	position: absolute;
+	background-color: transparent;
+	left: 153px;
+	right: 130px;
+	height: 20px;
+	margin-top: 1px;
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: black;
+}
+
+#full-titlebar-loggedIn-button , #full-titlebar-loggedOut-button, #mini-titlebar-loggedIn-button , #mini-titlebar-loggedOut-button {
+	height: 11px;
+	left: 76px;
+}
+
+#full-titlebar-text1 {
+	position: absolute;
+	background-color: transparent;
+	left: 93px;
+	right: 130px;
+	height: 20px;
+	margin-top: 1px;
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	font-size: 16px;
+	font-weight: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: black;
+}
+
+#full-titlebar-not-on-top-button, #full-titlebar-is-on-top-button, #mini-titlebar-not-on-top-button, #mini-titlebar-is-on-top-button {
+	right: 99px;
+}
+
+#full-titlebar-minimize-button, #mini-titlebar-minimize-button {
+	right: 66px;
+}
+
+#full-titlebar-maximize-button, #full-titlebar-demaximize-button, #mini-titlebar-maximize-button, #mini-titlebar-demaximize-button {
+	right: 39px;
+}
+
+#full-titlebar-close-button, #mini-titlebar-close-button {
+	right: 4px;
+}

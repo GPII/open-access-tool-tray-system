@@ -1,0 +1,31 @@
+{
+"pageHeader" : "Assistance On Demand Chat Providers", 
+"widgetName": "assistance_on_demand_chat_providers",
+"provider": [
+
+{
+"id": "1", 
+"name": "Assistance On Demand Chat Service", 
+"url": "http://aodchat.org" 
+},
+
+{
+"id": "2", 
+"name": "Hertz Car rental Chat", 
+"url": "https://hertzhelp.custhelp.com/app/chat/chat_launch_ondemand" 
+},
+
+{
+"id": "3", 
+"name": "Dish Network chat", 
+"url": "https://dishnetwork.custhelp.com/app/chat/chat_launch_en/launchpage/11" 
+},
+
+{
+"id": "4", 
+"name": "Verizon Wireless", 
+"url": "http://www.verizonwireless.com/wcms/contact-us.html#LiveChat" 
+}
+
+]
+}

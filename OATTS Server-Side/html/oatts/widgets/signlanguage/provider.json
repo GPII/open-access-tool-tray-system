@@ -1,0 +1,37 @@
+{
+"pageHeader" : "Sign Language Interpreter Providers", 
+"widgetName": "sign_language_interpreter_providers",
+"provider": [
+	{
+	"id": "1", 
+	"name": "Sign Language Provider1", 
+	"url": "http://goodsigning.org" 
+	},
+	{
+	"id": "2", 
+	"name": "Purple", 
+	"url": "http://www.purple.us/login/" 
+	},
+	{
+	"id": "3", 
+	"name": "American Sign language Services, Inc", 
+	"url": "http://aslservices.com/request-interpreter/" 
+	},
+	{
+	"id": "4", 
+	"name": "HIS Sign", 
+	"url": "http://www.hissign.com/index.html" 
+	},
+	{
+	"id": "5", 
+	"name": "vineya", 
+	"url": "https://app.govineya.com/users/sign_in" 
+	},
+	{
+	"id": "6", 
+	"name": "Valley Center of the Deaf", 
+	"url": "http://www.vcdaz.org/request.htm" 
+	}
+
+]
+}

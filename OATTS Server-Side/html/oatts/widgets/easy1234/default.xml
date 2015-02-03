@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>Easy 1234</name>
+	  <type>link</type>
+	  <full_description>This widget launches EASY1234.ORG.</full_description>
+	  <tool_tip id="easy1">Easy 1234</tool_tip>
+	  <developer>Trace Center</developer>
+	  <license>Closed</license>
+	  <hyperlink>http://easy1234.org</hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet.
+	  </requirements>
+
+	</widget>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>Text Assistant</name>
+	  <type>link</type>
+	  <full_description>The assistant will help you verify correct your grammar and spelling before placing it in a message.</full_description>
+	  <tool_tip id="employee01">Text Assistant</tool_tip>
+	  <developer>Trace Foundation</developer>
+	  <license>LGPL</license>
+	  <hyperlink>http://talkingcommunities.com/cctrace/</hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet. 
+	  </requirements>
+
+	</widget>

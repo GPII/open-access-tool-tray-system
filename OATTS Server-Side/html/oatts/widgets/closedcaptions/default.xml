@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<widget>
+	  <name>Closed Captions</name>
+	  <type>provider</type>
+	  <full_description>This widget allows for closed captioning for the hearing impaired. It also permits real-time corrections by designated correctors. 
+	  This widget may be used by companies performing webinars or web-based meetings to allow hearing-impaired participants to join.</full_description>
+	  <tool_tip id="employee01">Closed Captions</tool_tip>
+	  <developer>Trace Research &amp; Development Center</developer>
+	  <license>LGPL</license>
+	  <hyperlink></hyperlink>
+	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet for displaying captions. If you are a corrector of the captions session, you will need a password, which will be given to you by the party that is supplying the captions
+	  </requirements>
+
+	</widget>
