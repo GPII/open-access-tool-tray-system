@@ -11,10 +11,12 @@ var webviewWidth = 0;
 var prevWidgetName = "";
 var tooltipsLoaded = false;
 
+var guestMode = true;
 
-//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
-var testDemoMode = (loggedInUser == "Test123");   //---###//---###//---###//---### test hack - may be temporary
-//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+
+//---###//---###//---###//---###//---###//---###//---###//---###
+////// console.log("tray.js running at " + (new Date()).getTime() + " with inner_dpr = " + window.devicePixelRatio);
+//---###//---###//---###//---###//---###//---###//---###//---###
 
 
 ////// var textZoomSettingsArray = [ 65, 80, 100, 125, 160, 200, 250, 320, 400 ];   // text panels zoom settings, in percents
@@ -120,8 +122,7 @@ function sendDataToServer() {
 	var trayVar = "NONE";
 	var settingsVar = "NONE";
 	
-	////// if (favoritesDirty || trayDirty || settingsDirty) {
-	if ((favoritesDirty || trayDirty || settingsDirty) && testDemoMode == false) {   //---###//---###//---###//---###
+	if ((favoritesDirty || trayDirty || settingsDirty) && guestMode == false) {
 		// going to save data
 		dsURL = baseURL+"/includes/datasave.php";
 		
@@ -546,36 +547,29 @@ $(function() {
 	
 	//========================================//
 	//========================================//
+	//
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	//---###  show/hide disabled because it doesn't work with touch screens
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	/*
 	// show/hide "add widget to tray" buttons in widget picker
-	////// $('.tray-window-widget a').on('mouseenter', function() {
 	$('.tray-window-widget > *').on('mouseenter', function() {
 		$(this).parent().find('.widget-add-button').addClass('showflag');
-		////// $(this).parent().find('.widget-add-button').css("display", "block");
 	});
 	
-	/* //---###//---###//---###//---###
-	$('.tray-window-widget').on('mouseleave', function() {
-		var focusNode = document.activeElement;
-		if (this.firstChild != focusNode && this.lastChild != focusNode) {
-			$(this).find('.widget-add-button').removeClass('showflag');
-		}
-	});
-	*/ //---###//---###//---###//---###
 	$('.tray-window-widget > *').on('mouseleave', function() {
 		$(this).parent().find('.widget-add-button').removeClass('showflag');
-		////// $(this).parent().find('.widget-add-button').css("display", "none");
 	});
-	
 	
 	$('.tray-window-widget a, .widget-add-button').on('focusin', function() {
 		$(this).parent().find('.widget-add-button').addClass('showflag');
-		////// $(this).parent().find('.widget-add-button').css("display", "block");
 	});
 	
 	$('.tray-window-widget').on('focusout', function() {
 		$(this).find('.widget-add-button').removeClass('showflag');
-		////// $(this).parent().find('.widget-add-button').css("display", "none");
 	});
+	*/
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
 	
 	
 	//========================================//
@@ -587,7 +581,8 @@ $(function() {
 		// hide in widget picker
 		$(this).parents('.tray-window-widget').hide();
 		// update db
-		save_widgets();
+		////// save_widgets();
+		saveTrayDataWriteNow();
 	});
 	
 	
@@ -604,7 +599,8 @@ $(function() {
 			// remove item from tray
 			$(this).parents('.tray-widget').remove();
 			// update db
-			save_widgets();
+			////// save_widgets();
+			saveTrayDataWriteNow();
 		}
 	});
 	
@@ -853,24 +849,25 @@ $(function() {
 	
 	heartBeatID = setTimeout('heartbeat()', 4000);   // initial heartbeat setting
 	
-	
+	/*
 	// Initialize user settings from the server database data (if available)
-	////// if ("user_settings" in settingsData) {
-	if ("user_settings" in settingsData && testDemoMode == false) {   //---###//---###//---###//---###
+	if ("user_settings" in settingsData && guestMode == false) {
 		userSettingsObj = settingsData.user_settings;
 		if (Object.keys(windowSettingsObj).length == 0 && "window_settings" in settingsData) {
 			windowSettingsObj = settingsData.window_settings;
 		}
 		applyUserSettings();
 	}
+	*/
 	
 });   // end of jquery ready function
 
 
 function sendHeightInfo() {
 	chrome.runtime.sendMessage(thisAppId, {
+		inner_dpr: window.devicePixelRatio,
 		popup_panel_showing: (document.getElementById("iframe-container").style.display != "none" || document.getElementById("tray-widgets-picker").style.display != "none"),
-		tray_height: document.getElementById("tray-container").offsetHeight,
+		tray_height: document.getElementById("tray-container").offsetHeight
 	});
 }
 
@@ -910,12 +907,12 @@ function pickerTopLineBottom() {
 
 
 function maxAllowedTrayHeight() {
-	return Math.max(minTrayHeight, webviewHeight - 110)
+	return Math.max(minTrayHeight, window.innerHeight - 110)
 }
 
 
 function updatePopupBottom() {
-	var trayHeight = Math.min(webviewHeight, document.getElementById("tray-container").offsetHeight);
+	var trayHeight = Math.min(window.innerHeight, document.getElementById("tray-container").offsetHeight);
 	document.getElementById("iframe-container").style.bottom = trayHeight + "px";
 	document.getElementById("tray-widgets-picker").style.bottom = trayHeight + "px";
 }
@@ -1030,13 +1027,29 @@ function updateSettingsPage() {
 	document.getElementById("text-panels-zoom").value = userSettingsObj.zoom_setting;
 	document.getElementById("widget-panels-zoom").value = userSettingsObj.widgets_zoom_setting;
 	
-	//---###//---###//---###//---###//---###//---###
 	var versionText = "";
-	if (versionInfo != null) {
-		versionText = "OATTS Version: " + versionInfo;
+	if ("version_name" in versionInfo && "version_num" in versionInfo) {
+		versionText = versionInfo.version_name + " - Version " + versionInfo.version_num;
 	}
 	document.getElementById("version-info").textContent = versionText;
-	//---###//---###//---###//---###//---###//---###
+	
+	updateDebugInfo();   //---### TEMPORARY - For testing only !!!  Disable when no longer needed.
+	
+}
+
+
+function updateDebugInfo() {
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	//---###   TEMPORARY - For testing only !!!  Disable when no longer needed.
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	// console.log("inner dpr in updateSettingsPage(): " + window.devicePixelRatio);   //---###//---###//---###//---###//---###//---###
+	if (document.getElementById('oatts-debug-info') == null) {
+		var debugPara = document.createElement("p");
+		debugPara.setAttribute("id", 'oatts-debug-info');
+		document.getElementById("oatts-info").appendChild(debugPara);
+	}
+	document.getElementById('oatts-debug-info').textContent = "debug info: inner devicePixelRatio = " + window.devicePixelRatio;
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
 }
 
 
@@ -1275,12 +1288,24 @@ function initZoomSelectBox(zoomSelectId, zoomSettingsArray) {
 
 
 window.addEventListener('resize', function(event) {
+	chrome.runtime.sendMessage(thisAppId, {	inner_dpr: window.devicePixelRatio });
+	if (document.getElementById("settingsIframe").style.display == "block") {
+		updateDebugInfo();   //---### TEMPORARY - For testing only !!!  Disable when no longer needed.
+	}
+	
+	//---###//---###//---###//---###//---###//---###//---###//---###
+	////// console.log("inner dpr in 'resize EventListener': " + window.devicePixelRatio);
+	//---###//---###//---###//---###//---###//---###//---###//---###
+	
 	if (webviewWidth != window.innerWidth) {
 		webviewWidth = window.innerWidth;
 		document.getElementById("providerIframe").style.top = topLineBottom() + "px";
 		document.getElementById("settingsIframe").style.top = topLineBottom() + "px";
 		document.getElementById("tray-widgets-window").style.top = pickerTopLineBottom() + "px";
 	}
+	
+	centerDialog("dialog-alert");
+	centerDialog("dialog-form");
 });
 
 
@@ -1304,39 +1329,34 @@ window.addEventListener('message', function(event) {
 	// window height has changed
 	if ("window_height_info" in eventData) {
 		var windowHeightInfo = eventData.window_height_info;
-		if ("webview_height" in windowHeightInfo && "tray_height" in windowHeightInfo && "show_empty_popup" in windowHeightInfo) {
 		
+		//// setTimeout(function() {
 		
-			//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
-			//---###   Hack-Patch to fix Google Chrome change to *not* apply the Chrome "Page Zoom" to the contents of webviews
-			//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
-			////// webviewHeight = windowHeightInfo.webview_height;
-			////// webviewHeight = window.outerHeight;
-			//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
-			webviewHeight = windowHeightInfo.webview_height
-			
-			
+		if ("tray_height" in windowHeightInfo && "show_empty_popup" in windowHeightInfo) {
+			////// var trayHeight = windowHeightInfo.tray_height;   //---###//---### removed as   TEST   TEST
 			var trayHeight = document.getElementById("tray-container").offsetHeight;
-			if (windowHeightInfo.show_empty_popup == false) {
+			var savedTrayHeight = trayHeight;
+			
+			if (windowHeightInfo.show_empty_popup != true) {
 				if (document.getElementById("iframe-container").style.display == "none" && document.getElementById("tray-widgets-picker").style.display == "none") {
-					trayHeight = webviewHeight;
+					trayHeight = window.innerHeight;
 				} else {
-					trayHeight = Math.round(Math.min(maxAllowedTrayHeight(), Math.max(windowHeightInfo.tray_height, minTrayHeight)));
+					trayHeight = Math.round(Math.min(maxAllowedTrayHeight(), Math.max(trayHeight, minTrayHeight)));
 				}
-			} else {
-				trayHeight = windowHeightInfo.tray_height;
 			}
-			document.getElementById("tray-container").style.top = (webviewHeight - trayHeight) + "px";
+			document.getElementById("tray-container").style.top = (window.innerHeight - trayHeight) + "px";
 			document.getElementById("tray-container").style.height = trayHeight + "px";
 			document.getElementById("iframe-container").style.bottom = trayHeight + "px";
 			document.getElementById("tray-widgets-picker").style.bottom = trayHeight + "px";
-			if (trayHeight != windowHeightInfo.tray_height) {
+			
+			//// if (trayHeight != windowHeightInfo.tray_height) {   //---###//---### changed to below as   TEST   TEST
+			if (trayHeight != savedTrayHeight) {
 				sendHeightInfo();
 			}
-			
-			centerDialog("dialog-alert");
-			centerDialog("dialog-form");
 		}
+		
+		//// }, 200);
+		
 	}
 	
 	// user wants to open the widget picker panel
@@ -1372,8 +1392,23 @@ window.addEventListener('message', function(event) {
 		saveSettingsDataWriteNow();
 	}
 	
-	// initialize user settings from titlebar iff not already initialized
-	if ("user_settings" in eventData) {
+	if ("guest_mode_override" in eventData && "user_settings" in eventData) {
+		var position = loggedInUser.search(/{Guest}/i);
+		guestMode = ((position > 0) && (position == loggedInUser.length - 7));
+		if (eventData.guest_mode_override == true) {
+			guestMode = false;
+		}
+		
+		// Initialize user settings from the server database data (if available, and not in guest mode)
+		if ("user_settings" in settingsData && guestMode == false) {
+			userSettingsObj = settingsData.user_settings;
+			if (Object.keys(windowSettingsObj).length == 0 && "window_settings" in settingsData) {
+				windowSettingsObj = settingsData.window_settings;
+			}
+			////// applyUserSettings();
+		}
+		
+		// Initialize user settings from titlebar iff not already initialized
 		var titlebarUserSettingsObj = eventData.user_settings;
 		if ("thin_titlebar" in titlebarUserSettingsObj && !("thin_titlebar" in userSettingsObj)) {
 			userSettingsObj.thin_titlebar = titlebarUserSettingsObj.thin_titlebar;
@@ -1390,6 +1425,7 @@ window.addEventListener('message', function(event) {
 		if ("widgets_zoom_setting" in titlebarUserSettingsObj && !("widgets_zoom_setting" in userSettingsObj)) {
 			userSettingsObj.widgets_zoom_setting = titlebarUserSettingsObj.widgets_zoom_setting;
 		}
+		
 		applyUserSettings();
 		sendUserSettings();   //---###//---###//---###//---###
 	}
@@ -1600,8 +1636,8 @@ function centerDialog(dialogID) {
 	var dialogNode = document.getElementById(dialogID).parentNode;
 	if (dialogNode.style.display == "block" ) {
 		$( "#" + dialogID ).dialog( "option", "width", dialogWidth() );
-		dialogNode.style.top = Math.max(5, Math.round((webviewHeight - dialogNode.offsetHeight) / 2)) + "px";
-		dialogNode.style.left = Math.round((window.innerWidth - ((dialogNode.offsetTop + dialogNode.offsetHeight > webviewHeight) ? 20 : 0) - dialogNode.offsetWidth) / 2) + "px";
+		dialogNode.style.top = Math.max(5, Math.round((window.innerHeight - dialogNode.offsetHeight) / 2)) + "px";
+		dialogNode.style.left = Math.round((window.innerWidth - ((dialogNode.offsetTop + dialogNode.offsetHeight > window.innerHeight) ? 20 : 0) - dialogNode.offsetWidth) / 2) + "px";
 	}
 }
 

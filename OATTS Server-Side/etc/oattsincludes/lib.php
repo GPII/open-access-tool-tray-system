@@ -1,7 +1,6 @@
 <?php
 
 include_once 'config/server.php';
-//include_once 'dbconnect.php';
 
 /***********************/
 if (isset($globalDebug)) {
@@ -468,7 +467,7 @@ function login($email, $password, $mysqli_local) {
 
 					//just to be sure...
 					$user_id = preg_replace("/[^0-9]+/", "", $user_id);
-					$username = preg_replace("/\W+/", "", $username);
+					$username = preg_replace("/[^\w{}]+/", "", $username);
 					
 					$_SESSION['user_id'] = $user_id;
 					$_SESSION['username'] = $username;
@@ -621,7 +620,7 @@ function login_check($mysqli_local) {
 
 global $baseURL;
 	if (DEBUG_LIB) error_log("In function login_check");
-
+	
 	$returnVal = false; //failed
 	
 	// Check if all session variables are set 
@@ -682,7 +681,7 @@ global $baseURL;
 			}
 		} else {
 			// Could not prepare statement
-			header("Location: " . $baseURL . 'error.php?err=Database error: cannot prepare statement');
+			header("Location: " . $baseURL . '/error.php?err=Database error: cannot prepare statement');
 			exit();
 		}
 	} else {

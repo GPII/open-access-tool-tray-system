@@ -6,7 +6,7 @@
 	  <tool_tip id="employee01">Trace Online Hand Raising Utility</tool_tip>
 	  <developer>Trace Research &amp; Development Center</developer>
 	  <license>LGPL</license>
-	  <hyperlink>http://gahrt.raisingthefloor.org/</hyperlink>
+	  <hyperlink>http://tohru.raisingthefloor.org/</hyperlink>
 	  <requirements d="No" r="No" w="Yes" c="Yes" i="No" s="No">This widget requires external access to the Internet.
 	  </requirements>
 

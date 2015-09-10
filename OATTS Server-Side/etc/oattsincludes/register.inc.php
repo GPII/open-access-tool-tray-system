@@ -9,10 +9,9 @@ if (isset($_POST['username'], $_POST['email'], $_POST['p'])) {
 	//filter_var($username, FILTER_SANITIZE_STRING, FILTER_SANITIZE_ENCODED);
 	$username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 	//restrict length
-	$username = strlen($username) > 10 ? substr($username,0,10) : $username;
-	//further limit username to only  alphanumberic and underscore - delete others
-	//$username = preg_replace("/[^a-zA-Z0-9_]+/", "", $username);
-	$username = preg_replace("/\W+/", "", $username);
+	$username = strlen($username) > 25 ? substr($username, 0, 25) : $username;
+	//further limit username to only alphanumberic, underscores, and curly braces - delete others
+	$username = preg_replace("/[^\w{}]+/", "", $username);
 	
 	//use hashed version of username to be safe
 	//$username = hash('sha512', $username);

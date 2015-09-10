@@ -11,18 +11,16 @@ if (isset($globalDebug)) {
 if (DEBUG_PICKER) error_log("In icon_picker.php");
 /***********************/
 
-sec_session_start(false, true); // don't update session id; do update timestamp
-
 $fileNameArray = array();
 
 if (($h = opendir(BOOKMARKICONS_ABS_PATH)) != false) {
 	while( ($f = readdir($h)) !== false) {
 		if (DEBUG_PICKER) error_log('file =  '.$f);
 		if ($f == '.' || $f == '..') continue;
-		$filepath = BOOKMARKICONS_ABS_PATH . "/" . $f;
+		$filepath = BOOKMARKICONS_ABS_PATH . $f;
 		if (!is_file($filepath)) continue;
 		
-		//okay got a file
+		// okay got a file
 		if (pathinfo($filepath)['extension'] == "png") {
 			array_push($fileNameArray, basename($filepath));
 		}
@@ -82,8 +80,9 @@ sort($fileNameArray);
 					foreach($fileNameArray as $fileName) {
 						echo '<div class="iconpicker-widget">';
 						echo '<a href="javascript:;" title="' . basename($fileName, ".png") . ' icon" class="iconpicker-link" onclick="pickThisIcon(\'' . $fileName . '\')" tabindex="0">';
-						echo '<img src="' . "/" . BASEDIR . BOOKMARKICONSDIR . "/" . $fileName . '" alt="" class="iconpicker-bookmark-icon"/>';
-						echo '<img src="/oatts/images/to_tray.png" alt="" class="iconpicker-shortcut-icon"/>';
+						echo '<img src="' . BOOKMARKICONS_BASE_PATH . $fileName . '" alt="" class="iconpicker-bookmark-icon"/>';
+						/////// echo '<img src="/oatts/images/to_tray.png" alt="" class="iconpicker-shortcut-icon"/>';
+						echo '<img src="images/to_tray.png" alt="" class="iconpicker-shortcut-icon"/>';
 						echo '<div class="iconpicker-filename">' .  basename($fileName, ".png") . '</div></a>';
 						echo '</a>';
 						echo '</div>';

@@ -5,15 +5,9 @@
 
 {
 "id": "1", 
-"name": "RtF CCC Sender", 
-"url": "http://ccc.raisingthefloor.org/cccentry.php" 
-},
-
-{
-"id": "2", 
 "name": "RtF CCC Server", 
-"url": "http://ccc.raisingthefloor.org" 
-}
+"url": "http://ccc.raisingthefloor.org/ccc/login.html" 
+},
 
 ]
 }

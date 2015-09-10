@@ -35,7 +35,7 @@ if (($h = opendir(WIDGET_ABS_PATH)) != false) {
 	while( ($f = readdir($h)) !== false) {
 		if (DEBUG_TRAY) error_log('file =  '.$f);
 		if ($f == '.' || $f == '..') continue;
-		$filepath = WIDGET_ABS_PATH . "/" . $f;
+		$filepath = WIDGET_ABS_PATH . $f;
 		if (!is_dir($filepath)) continue;
 		//okay got a directory
 		$filepathW = $filepath.'/default.xml';
@@ -120,15 +120,15 @@ echo '};' . "\n";
 echo "var settingsData = " . $settingsData . ";\n";
 echo "\n";
 
-echo "var baseURL='".$baseURL . "';\n";
-echo "var widgetsPath='/". BASEDIR . WIDGETSDIR . "/';\n";
-echo "var bookmarkIconsPath='/". BASEDIR . BOOKMARKICONSDIR . "/';\n";
+echo "var baseURL='" . $baseURL . "';\n";
+echo "var widgetsPath='" . WIDGETS_BASE_PATH . "';\n";
+echo "var bookmarkIconsPath='". BOOKMARKICONS_BASE_PATH . "';\n";
 echo "\n";
 
-echo "var loggedInFlag = ".$loggedInFlag.";\n";
-echo "var loggedInUser = \"".$loggedInUser."\";\n";
-echo "var FIELD_MAX_SIZE = ".DATA_SIZE_LIMIT.";\n";
-echo "var HEART_BEAT_RATE = ".HEART_BEAT_RATE.";\n";
+echo "var loggedInFlag = " . $loggedInFlag . ";\n";
+echo "var loggedInUser = \"" . $loggedInUser . "\";\n";
+echo "var FIELD_MAX_SIZE = " . DATA_SIZE_LIMIT . ";\n";
+echo "var HEART_BEAT_RATE = " . HEART_BEAT_RATE . ";\n";
 echo "\n";
 
 echo "var favoritesDirty=false;\n";

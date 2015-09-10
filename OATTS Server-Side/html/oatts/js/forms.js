@@ -189,9 +189,9 @@ function validateForm(form) {
 	}
 	
 	// Check the username
-	regEx = /^\w+$/; 
+	regEx = /^[\w{}]+$/; 
 	if(!regEx.test(form.username.value)) { 
-		msg = "Username must contain only letters, digits and underscores.";
+		msg = "Username must contain only letters, digits, underscores, and curly braces.";
 		document.getElementById('user').innerHTML = msg;
 		form.username.focus();
 		return false; 

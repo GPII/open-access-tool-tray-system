@@ -1,9 +1,23 @@
 <?php
+include './includes/path.php';
+include_once ROOT_PATH . '/lib.php';
+
+//---### NOTE: $fileName, $appId, and $versionNumber must be up-to-date for the relevant App version & server instance(s) of OATTS
+$newestVersionNumber = '2.51';
+$fileName = "OATTS_Client(" . SERVER_CONTEXT_LABEL . ").crx";
+
+if (SERVER_CONTEXT_LABEL === 'CAE-Sandbox') {   // for CAE OattsSandbox server
+	$appId = 'mdladekdidpafbbniknhiekjnagoihng';
+	$versionNumber = $newestVersionNumber;
+} else if (SERVER_CONTEXT_LABEL === 'CAE') {   // for CAE Oatts "Public" server
+	$appId = 'miopgnjdnckglimiocfdkohhjfnbpbhg';
+	$versionNumber = $newestVersionNumber;
+} else {   // for Oatts RtF Public server
+	$appId = 'opgbpbnjnekjjbonfgnfchlmbenlmmgi';
+	$versionNumber = $newestVersionNumber;
+}
 
 print "<?xml version='1.0' encoding='UTF-8'?>";
 print "<gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>";
-print "	<!-- //---### must match packaged app ID, packaged app download path, and new packaged app version number for relevant server instance of OATTS //---### -->";
-print "	<app appid='miopgnjdnckglimiocfdkohhjfnbpbhg'>";
-print "		<updatecheck codebase='http://oatts.raisingthefloor.org/OATTS_Client.crx' version='2.42' />";
-print "	</app>";
+print "<app appid='" . $appId . "'><updatecheck codebase='" . $baseURL . "/" . $fileName . "' version='" . $versionNumber . "' /></app>";
 print "</gupdate>";

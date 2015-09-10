@@ -4,8 +4,6 @@ error_log("In process_logout.php");
 include_once 'lib.php';
 sec_session_start(false,true);
 
-//include_once 'dbconnect.php';
- 
 // Unset all session values 
 $_SESSION = array();
  

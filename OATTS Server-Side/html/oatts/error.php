@@ -22,6 +22,6 @@ if (! $error) {
 
         <h1>There was a problem</h1>
         <p class="error"><?php echo $error; ?></p>
-		<p>Return to the <a <?php echo ("href=\"" .$baseURL. "/login.php")?>">login page</a>.</p>
+		<p>Return to the <a <?php echo ("href=\"" .$baseURL . "/login.php")?>">login page</a>.</p>
     </body>
 </html>

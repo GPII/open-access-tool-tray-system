@@ -207,6 +207,7 @@ body :focus {
 body .ui-tooltip {
 	border-width: 2px;   /*### for fall-back compatibility */
 	border-width: calc(1px + 0.075em);
+	pointer-events: none;
 }
 
 /********************************************************/
@@ -790,7 +791,8 @@ fieldset {
 	top: 0;
 	width: 100%;
 	/*### background-color: #384048;   */
-	background-color: #202020;	 /*### changed to match tray */
+	/*### background-color: #202020;	 /*### changed to match tray */
+	background-color: #383838;   /*### changed to *not* match tray */
 }
 
 
@@ -917,15 +919,19 @@ fieldset {
 
 .widget-add-button {
 	width: 100%;
+	/* //---###  showflag class behavior removed because show/hide doesn't work with touch screens
 	z-index: 1;
 	opacity: 0;
+	*/
 }
 
 
+/* //---###  showflag class behavior removed because show/hide doesn't work with touch screens
 .showflag {
 	z-index: 9;
 	opacity: 1;
 }
+*/
 
 
 .tray-window-widget-link {

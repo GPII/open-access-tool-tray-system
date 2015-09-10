@@ -41,7 +41,7 @@ include_once ROOT_PATH . '/register.inc.php';
 		?>
 		
 		<ul id="rules-list">
-			<li>Usernames may only contain letters, digits, and underscores.</li>
+			<li>Usernames may only contain letters, digits, underscores, and curly braces.</li>
 			<li>Passwords must be at least 6 characters long, and must contain both upper and lower case letters, and at least one digit.</li>
 		</ul>
 		<form method="post" name="registration_form" action="<?php echo ($baseURL. "/register.php")?>">
