@@ -225,6 +225,8 @@ function sess_close() {
 function sess_read($session_id) {
 	if (DEBUG_LIB) error_log('sess_read: '.$session_id);
 	global $mysqli;
+	
+	
 	/*
 	if ($stmt = $mysqli->prepare("SELECT sess_value, lastaccesstime
 							FROM sessions 
@@ -237,6 +239,15 @@ function sess_read($session_id) {
 			$stmt->fetch();
 			
 			*/
+			
+			
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	//---###
+	//---###   Note from JOE (Oct 2014):  should convert following code (back) to secure version database query.  (See code above.)
+	//---###
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+	//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
 	if ($res = $mysqli->query("SELECT sess_value, lastaccesstime FROM sessions WHERE sid = '$session_id'")) {
 		if ($res->num_rows) {
 			$row = $res->fetch_assoc();

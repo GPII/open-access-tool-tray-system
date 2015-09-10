@@ -13,16 +13,6 @@ if (DEBUG_PICKER) error_log("In icon_picker.php");
 
 sec_session_start(false, true); // don't update session id; do update timestamp
 
-
-/* //---###//---###//---###//---###//---###
-$zoom_setting = 100;
-if (isset($_GET['zoomsetting'])) {
-	$tmp = filter_input(INPUT_GET, 'zoomsetting', FILTER_SANITIZE_NUMBER_INT);
-	if (filter_var($tmp, FILTER_VALIDATE_INT)) $zoom_setting = $tmp;
-}
-*/ //---###//---###//---###//---###//---###
-
-
 $fileNameArray = array();
 
 if (($h = opendir(BOOKMARKICONS_ABS_PATH)) != false) {
@@ -45,126 +35,69 @@ if (($h = opendir(BOOKMARKICONS_ABS_PATH)) != false) {
 sort($fileNameArray);
 ?>
 
-	<!DOCTYPE html>
-	<html>
+
+<!DOCTYPE html>
+<html>
+	
 	<head>
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-	<meta http-equiv="Pragma" content="no-cache" />
-	<meta http-equiv="Expires" content="0" />
-
-	<link rel="stylesheet" type="text/css" <?php echo "href=\"styles/normalize.css?v=" . time() ?><?php echo "href=\"styles/normalize.css?v=" . time() ?>" />
-	<link rel="stylesheet" type="text/css" id="traystyles" <?php echo "href=\"styles/style.css?v=" . time() ?>" />
-	<link rel="stylesheet" type="text/css" id="providerstyles" <?php echo "href=\"styles/provider.css?v=" . time() ?>" />
-	
-	</head>
-	<body>
-	
-	<div id="iconpicker" style="display: block;">
-		<div id="iconpicker-titlebar" style="display: block; font-size: 100%;" >
-			<button type="button" id="close-iconpicker" class="closepopupbutton" onclick="closeIconPicker()" title="Close Icon Picker" tabindex="0">
-				Close
-			</button>
-			<div id="iconpicker-title">Click to Choose a New Bookmark Icon</div>
-			<div id="picker-top-line"></div>
-		</div>
-		<!-- TEST //---###//---###//---###//---###//---### -->
-		<!--
-		<div id="iconpicker-window" 
-			<?php
-			// echo 'style="display: block; font-size: ' . $zoom_setting . '%;"' 
-			?> >
+		<title>OATTS Bookmark Icon Chooser</title>
+		
+		<!-- //---### Is this either needed or wanted here ???
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="0" />
 		-->
-		<!-- END TEST //---###//---###//---###//---###//---### -->
 		
-		<div id="iconpicker-window" style="display: none; font-size: 100%;" >
+		<link rel="stylesheet" type="text/css" href="styles/normalize.css?v=<?php echo time(); ?>" />
+		<link rel="stylesheet" type="text/css" href="js/ui/jquery-ui.css" />
+		<link rel="stylesheet" type="text/css" id="traystyles" href="styles/style.css?v=<?php echo time(); ?>" />
+	</head>
+	
+	<body style="background-color: #202020;">
 		
-			<div id="iconpicker-window-container">
+		<div id="iconpicker" style="display: none;">
+			<div id="iconpicker-titlebar">
 				
-		
-		
-<!-- TESTING   ***   TESTING   ***   TESTING   -->
-<!--
-<div style="background-color: white; color: black; font-weight: normal; font-size: 100%;">
-<li></li>
-<li style="font-family: Arial">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Arial)</li>
-<li style="font-family: Arial">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Arial)</li>
-<li style="font-family: Arial"></li>
-<li style="font-family: Arial; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Arial-90%)</li>
-<li style="font-family: Arial; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Arial-90%)</li>
-<li style="font-family: Arial; font-size: 90%;"></li>
-<li style="font-family: Arial; font-size: 85%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Arial-85%)</li>
-<li style="font-family: Arial; font-size: 85%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Arial-85%)</li>
-<li style="font-family: Arial; font-size: 85%;"></li>
-<li style="font-family: Calibri">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Calibri)</li>
-<li style="font-family: Calibri">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Calibri)</li>
-<li style="font-family: Calibri"></li>
-<li style="font-family: Calibri; font-size: 115%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Calibri-115%)</li>
-<li style="font-family: Calibri; font-size: 115%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Calibri-115%)</li>
-<li style="font-family: Calibri; font-size: 115%;"></li>
-<li style="font-family: Verdana">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Verdana)</li>
-<li style="font-family: Verdana">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Verdana)</li>
-<li style="font-family: Verdana"></li>
-<li style="font-family: Verdana; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Verdana-90%)</li>
-<li style="font-family: Verdana; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Verdana-90%)</li>
-<li style="font-family: Verdana; font-size: 90%;"></li>
-<li style="font-family: Verdana; font-size: 80%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Verdana-80%)</li>
-<li style="font-family: Verdana; font-size: 80%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Verdana-80%)</li>
-<li style="font-family: Verdana; font-size: 80%;"></li>
-<li style="font-family: Lucida Sans">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans)</li>
-<li style="font-family: Lucida Sans">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans)</li>
-<li style="font-family: Lucida Sans"></li>
-<li style="font-family: Lucida Sans Unicode">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans Unicode)</li>
-<li style="font-family: Lucida Sans Unicode">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans Unicode)</li>
-<li style="font-family: Lucida Sans Unicode"></li>
-<li style="font-family: Lucida Sans Unicode; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans Unicode-90%)</li>
-<li style="font-family: Lucida Sans Unicode; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans Unicode-90%)</li>
-<li style="font-family: Lucida Sans Unicode; font-size: 90%;"></li>
-<li style="font-family: Lucida Sans Unicode; font-size: 80%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans Unicode-80%)</li>
-<li style="font-family: Lucida Sans Unicode; font-size: 80%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Lucida Sans Unicode-80%)</li>
-<li style="font-family: Lucida Sans Unicode; font-size: 80%;"></li>
-<li style="font-family: Tahoma">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Tahoma)</li>
-<li style="font-family: Tahoma">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Tahoma)</li>
-<li style="font-family: Tahoma"></li>
-<li style="font-family: Tahoma; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Tahoma-90%)</li>
-<li style="font-family: Tahoma; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Tahoma-90%)</li>
-<li style="font-family: Tahoma; font-size: 90%;"></li>
-<li style="font-family: Trebuchet MS">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Trebuchet MS)</li>
-<li style="font-family: Trebuchet MS">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Trebuchet MS)</li>
-<li style="font-family: Trebuchet MS"></li>
-<li style="font-family: Trebuchet MS; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Trebuchet MS-90%)</li>
-<li style="font-family: Trebuchet MS; font-size: 90%;">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Trebuchet MS-90%)</li>
-<li style="font-family: Trebuchet MS; font-size: 90%;"></li>
-<li style="font-family: Calibri">OATTS Settings   Tool Changer   <b>OATTS Settings   Tool Changer</b>    (Calibri)</li>
-<li></li>
-</div>
--->
-<!-- END of TESTING   ***   TESTING   ***   TESTING   -->
-
-
-		
-		
-				<?php
-				foreach($fileNameArray as $fileName) {
-					
-					//---### echo "<p>" . $fileName . "</p>\n";
-					
-					echo '<div class="iconpicker-widget">';
-					echo '<a href="javascript:;" title="' . $fileName . '" class="iconpicker-link" onclick="pickThisIcon(\'' . $fileName . '\')" tabindex="0">';
-					echo '<img src="' . "/" . BASEDIR . "/" . BOOKMARKICONSDIR . "/" . $fileName . '" class="iconpicker-bookmark-icon"/>';
-					echo '<img src="/oatts/images/to_tray.png" class="iconpicker-shortcut-icon"/>';
-					echo '<div class="iconpicker-filename">' .  basename($fileName, ".png") . '</div></a>';
-					echo '</a>';
-					echo '</div>';
-					
-				}
-				?>
+				<div id="picker-titlebar-buttons">
+					<button type="button" class="zoom-glass-button" title="Zoom Smaller (Ctrl -)" onclick="zoomSmaller();" tabindex="0">
+						<img src="images/zoom_out.png" alt="" class="zoom-glass-icon" onmouseover="updateImage(this, 'images/zoom_out_hover.png');" onmouseout="updateImage(this, 'images/zoom_out.png');">
+					</button>
+					<button type="button" class="zoom-glass-button" title="Zoom Bigger (Ctrl +)" onclick="zoomBigger();" tabindex="0">
+						<img src="images/zoom_in.png" alt="" class="zoom-glass-icon" onmouseover="updateImage(this, 'images/zoom_in_hover.png');" onmouseout="updateImage(this, 'images/zoom_in.png');">
+					</button>
+					<button type="button" id="close-iconpicker" alt="" class="closepopupbutton" onclick="closeIconPicker()" title="Close Icon Picker" tabindex="0">
+						Close
+					</button>
+				</div>
 				
+				<div id="iconpicker-title">Click to Choose a New Bookmark Icon</div>
+				<div id="picker-top-line"></div>
+				<div id="picker-top-line-bottom"></div>
+			</div>
+			
+			<div id="iconpicker-window">
+				<div id="iconpicker-window-container">
+					
+					<?php
+					foreach($fileNameArray as $fileName) {
+						echo '<div class="iconpicker-widget">';
+						echo '<a href="javascript:;" title="' . basename($fileName, ".png") . ' icon" class="iconpicker-link" onclick="pickThisIcon(\'' . $fileName . '\')" tabindex="0">';
+						echo '<img src="' . "/" . BASEDIR . BOOKMARKICONSDIR . "/" . $fileName . '" alt="" class="iconpicker-bookmark-icon"/>';
+						echo '<img src="/oatts/images/to_tray.png" alt="" class="iconpicker-shortcut-icon"/>';
+						echo '<div class="iconpicker-filename">' .  basename($fileName, ".png") . '</div></a>';
+						echo '</a>';
+						echo '</div>';
+					}
+					?>
+					
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<script <?php echo 'src="js/iconpicker.js?v=' . time() ?> "></script>
-	
+		
+		<script src="js/jquery.js" ></script>
+		<script src="js/ui/jquery-ui.js" ></script>
+		<script src="js/iconpicker.js?v=<?php echo time(); ?>" ></script>
+		
 	</body>
 	
-	</html>
+</html>

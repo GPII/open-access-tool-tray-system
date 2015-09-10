@@ -1,2 +1,4 @@
 <?php
-	defined('ROOT_PATH') or define('ROOT_PATH','/home/vhosts/oatts.trace.wisc.edu/etc/oattsincludes');
+
+defined('ROOT_PATH') or define('ROOT_PATH','/home/path/to/etc/oattsincludes');   // for CAE Oatts "Public" server
+

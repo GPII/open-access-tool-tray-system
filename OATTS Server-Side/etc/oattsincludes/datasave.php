@@ -54,6 +54,8 @@ if (login_check($mysqli) != true) {
 	if (isset($_POST['settings'])) {
 		$settingsData = $_POST['settings'];
 		if ($settingsData != "NONE") {
+			//---### $settingsData = base64_decode(strtr($settingsData, "_!", "=/"));   // decode Settings data (was encoded to avoid tripping server-side ModSecurity)
+			$settingsData = base64_decode($settingsData);   // decode Settings data (was encoded to avoid tripping server-side ModSecurity)
 			CheckData($settingsData, "Settings");
 			array_push($dataArray, $settingsData);
 			if (count($dataArray) > 1) $stmt .= ",";

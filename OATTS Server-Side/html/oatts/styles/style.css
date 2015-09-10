@@ -1,13 +1,72 @@
 
-#loginhead {
-	margin-left: auto;
-	margin-right: auto;
-	width: 50%;
+/********************************************************/
+/* styles for register, login, and logout screens       */
+/********************************************************/
+
+.signin-body {
+	margin: 0.75em;
+	margin-right: 0.5em
+}
+
+.signin-header {
+	font-size: 1.2em;
+	margin-bottom: 0.75em;
+}
+
+#rules-list {
+	font-size: 0.875em;
+	margin-top: -0.25em;
+	margin-bottom: 1.0em;
 }
 
 
-#guestdiv {
+.signin-entry-field {
+	margin-bottom: 0.225em;
+}
 
+
+.signin-entry-field input {
+	width: 10.5em;
+	margin-top: 0.075em;
+	margin-right: 0.6em;
+}
+
+.password-entry-field input {
+	width: 9em;
+}
+
+
+.regMsg {
+	color: red;
+}
+
+
+#signin-zoom {
+	position: static;
+	float: right;
+	margin-top: -0.5em;
+	font-weight: bold;
+	font-size: 1.0em;   /*### for fall-back compatibility */
+	font-size: calc(8px + 0.75em);
+	-webkit-user-select: none;
+}
+
+/********************************************************/
+/* end of register, login, and logout screen styles     */
+/********************************************************/
+
+
+body {
+	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	font-family: Verdana, "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;	
+	font-size: 100%;
+}
+
+
+body :focus {
+	outline: #ff8000 solid;
+	outline-width: 0.25em;   /*### for fall-back compatibility */
+	outline-width: calc(2px + 0.15em);
 }
 
 
@@ -23,19 +82,15 @@
 }
 
 
-body :focus {
-	outline: #ff8000 solid;
-	outline-width: 0.25em;   /*### for fall-back compatibility */
-	outline-width: calc(2px + 0.15em);
+#tray-widgets-picker-titlebar  {
+	font-size: 20px;   /*### for fall-back compatibility */
+	font-size: calc(12px + 0.6em);
 }
 
 
 /********************************************************/
 /* overrides of jquery-ui.css for dialogs and tooltips  */
 /********************************************************/
-
-
-
 
 .ui-widget {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
@@ -65,6 +120,36 @@ body :focus {
 	font-weight: bold;
 }
 
+.ui-corner-all {
+	border-width: 0.1em;   /*### for fall-back compatibility */
+	border-width: calc(1px + 0.075em);
+	border-radius: 0.3em;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	right: .4em;
+	width: 1.5em;
+	height: 1.5em;
+	top: 50%;
+	margin: -0.75em 0 0 0;
+	/* padding: 0.1em; */
+	border-width: 0.1em;
+}
+
+.ui-button-icon-only .ui-icon-closethick {
+	width: 1.25em;
+	height: 1.25em;
+	top: 50%;
+	left: 50%;
+	margin-top: -0.625em;
+	margin-left: -0.625em;
+}
+
+.ui-icon-closethick {
+	background-size: 20em 18.75em;
+	background-position: -7.5em -10em;
+}
+
 .ui-dialog .ui-dialog-buttonpane {
 	border-width: 0.15em 0 0 0;
 	margin-top: .1em;   /*### was .5em */
@@ -72,9 +157,11 @@ body :focus {
 }
 
 .ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .6em .4em 0;   /*### was .5em .4em .5em 0 */
+	margin: .5em .3em .4em .3em;   /*### was .5em .4em .5em 0 */
 	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	border-width: 0.1em;
 	background: linear-gradient(to bottom, #F0F8FC, #C0E0F0);
+	-webkit-user-select: none;
 }
 
 .ui-button-text-only .ui-button-text {
@@ -103,21 +190,23 @@ body :focus {
 }
 
 .ui-tooltip {
-	max-width: 20em;
-	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
+	max-width: 18em;
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
 	font-size: 100%;
-	font-weight: bold;
-	padding: 0.1em 0.4em 0.2em 0.4em;
-	background: #fff4e8;   /*### was #e8f4ff */
-	border: 0.15em solid #ffb060;
-	border-radius: 0.4em;
+	padding: 0em 0.4em 0.1em 0.4em;
+	background: #fff4e8;
+	border: 2px solid #ff8000;   /* border width superseded below */
+	border-radius: 0.3em;   /*### for fall-back compatibility */
+	border-radius: calc(2px + 0.2em);
 	word-wrap: break-word;
+	/*
 	word-break: break-all;
+	*/
 }
 
 body .ui-tooltip {
 	border-width: 2px;   /*### for fall-back compatibility */
-	border-width: calc(1.5px + 0.075em);
+	border-width: calc(1px + 0.075em);
 }
 
 /********************************************************/
@@ -150,7 +239,7 @@ fieldset {
 	color: #b00000;
 	font-size: 0.8em;
 	font-weight: bold;
-	padding-left: 2em;
+	padding-left: 1em;
 }
 
 .validateTips {
@@ -197,19 +286,84 @@ fieldset {
 /********************************************************/
 
 
-.regMsg {
-	color: red;
-}
-
-
 #iframe-container {
 	position: fixed;
 	top: 0;
-	/*
+	width: 100%
+}
+
+
+#iframe-container-titlebar {
+	font-size: 1.0em;   /*### for fall-back compatibility */
+	font-size: calc(10px + 0.6em);
+}
+
+
+#zoomFontSize {
+	position: static;
+	padding-top: 0.1em;
+	margin-top: 0.1em;
+	margin-left: 0.25em;
+	margin-right: 0.3em;
+	margin-bottom: 0.15em;
+	text-align: right;
+	font-weight: bold;
+	-webkit-user-select: none;
+}
+
+
+#zoom-buttons {
+	color: #0000B2;
+	display: inline-block;
+	margin-left: 1em;
+}
+
+
+.zoom-letter {
+	padding: 0;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+}
+
+
+#zoomout {
+	font-size: 90%;
+}
+
+
+#zoomdefault {
+	font-size: 110%;
+	margin-right: 0.15em;
+}
+
+
+#zoomin {
+	font-size: 130%;
+}
+
+
+.disabledZoomSetting {
+	cursor: default;
+	opacity: 0.4;
+}
+
+
+#iframe-top-line {
+	position: static;
+	margin-top: 0.1em;
+	margin-left: 3px;
+	margin-right: 3px;
+	height: 0.15em;   /*### for fall-back compatibility */
+	height: calc(1px + 0.075em);
+	background-color: #a0a0a0;
+ }
+
+ 
+#iframe-top-line-bottom {
 	left: 0;
 	right: 0;
-	*/
-	width: 100%
+	height: 0;
 }
 
 
@@ -218,32 +372,47 @@ fieldset {
 	top: 0;
 	left: 0;
 	right: 0;
-	bottom: 5px;
+	bottom: 4px;
 	/*### background-color: white; */
 }
 
 
 #providercontent {
 	position: absolute;
-	left: 1.0em;
-	right: 1.0em;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding-left: 1.0em;
+	padding-right: 1.0em;
+	overflow: auto;
 }
 
 
-.settingsTitle {
+#settingsTitle, #aboutTitle {
 	font-size: 1.5em;
 	max-width: 10em;
 	text-align: center;
-	color: #0000B2;
 	margin-top: 20px;   /*### for fall-back compatibility */
 	margin-top: calc(8px + 0.15em);
+	margin-bottom: 1em;
+}
+
+	
+#aboutTitle {
+	max-width: 9em;
 }
 
 
-#settingscontent {
+#settingscontent, #aboutcontent {
 	position: absolute;
-	left: 0.5em;
-	right: 0.5em;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+	overflow: auto;
 }
 
 
@@ -251,7 +420,15 @@ fieldset {
 	font-size: 1.0em;
 	font-weight: bold;
 	margin-left: 0.75em;
+	line-height: 1.4em;
 }
+
+
+.oatts-setting-line {
+	cursor: pointer;
+	-webkit-user-select: none;
+}
+
 
 .settingsCheckbox {
 	height: 1.0em;
@@ -265,24 +442,35 @@ fieldset {
 }
 
 
+#oatts-info {
+	margin-left: 1.0em;
+}
+
+
 #tray-divider {
 	position: absolute;
-	top: -5px;
+	top: -4px;
 	left: 0;
 	right: 0;
+	
+	/*
 	height: 3px;
-	cursor: ns-resize;
 	border-top: 1px solid black;
 	border-bottom: 1px solid black;
 	background-color: #d0d8e0;
+	*/
+	height: 4px;
+	background-color: #98B8D8;
+	
+	cursor: ns-resize;
 	z-index: 1003;	
 }
 
 
 #tray-container {
 	position: fixed;
+	bottom: 0;
 	width: 100%;
-	min-height: 32px;
 	display: block;
 	background-color: #202020;
 	overflow: visible;
@@ -316,15 +504,14 @@ fieldset {
 	font-size: 100%;
 	
 	background-color: transparent;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: auto;	
 	z-index: 2;
 }
 
 
 .widget-name, .tray-widget-name, .tray-widget-bookmark {
 	position: relative;
-	font-size: 85%;
+	font-size: 87.5%;
 	padding-top: 0.2em;
 	line-height: 1.2em;
 	text-align: center;
@@ -391,15 +578,17 @@ fieldset {
 	
 	
 	margin-top: 0.1em;
-	margin-left: 0.75em;
+	margin-left: 0.5em;   /*### for fall-back compatibility */
+	margin-left: calc(4px + 0.4em);
 	margin-right: 0.4em;
 	
 	
 	color: black;
 	border: 0.2em solid #D0A000;
-	border-radius: 0.45em;
+	border-radius: 0.4em;
 	background: linear-gradient(to bottom, #F8F000, #E0C000);
 	cursor: pointer;
+	-webkit-user-select: none;
 }
 
 
@@ -418,8 +607,28 @@ fieldset {
 .closepopupbuttonicon {
 	display: inline-block;
 	height: 1.0em;
-	padding-left: 0.4em;
+	padding-left: 0.2em;
 	margin-bottom: -0.1em;
+}
+
+
+.zoom-glass-button {
+	margin-top: 0.05em;
+	padding: 0.05em;
+	height: 1.6em;
+	background-color: transparent;
+	border: none;
+}
+
+
+.zoom-glass-icon {
+	height: 1.5em;
+}
+
+
+#picker-titlebar-buttons {
+	float: right;
+	margin-left: 0.5em;
 }
 
 
@@ -427,25 +636,36 @@ fieldset {
 	position: static;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
 	font-weight: bold;
-	font-size: 125%;
+	font-size: 120%;
+	padding-top: 0.05em;
 	margin-top: 0.2em;
-	margin-bottom: 0.3em;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
+	margin-bottom: 0.35em;
+	margin-left: 0.3em;   /*### for fall-back compatibility */
+	margin-left: calc(4px + 0.25em);
+	margin-right: 0.3em;   /*### for fall-back compatibility */
+	margin-right: calc(4px + 0.25em);
 	text-align: center;
 	color: white;
 }
 
 
+
 #picker-top-line {
 	position: static;
 	margin-top: 0.2em;
-	margin-left: 0.4em;
-	margin-right: 0.4em;
+	margin-left: 3px;
+	margin-right: 3px;
 	height: 0.15em;   /*### for fall-back compatibility */
-	height: calc(1px + 0.1em);
-	background-color: white;
+	height: calc(1px + 0.075em);
+	background-color: #c0c0c0;
  }
+
+ 
+#picker-top-line-bottom {
+	left: 0;
+	right: 0;
+	height: 0;
+}
 
 
  /*### START new section for Bookmark Icon Picker window */
@@ -455,9 +675,17 @@ fieldset {
 	width: 100%;
 	height: 100%;
 	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
-	font-size: 100%;	
+	
+	/*### font-size: 100%;	 */
+	
 	color: white;
 	background-color: #202020;
+}
+
+
+#iconpicker-titlebar {
+	font-size: 20px;   /*### for fall-back compatibility */
+	font-size: calc(12px + 0.6em);
 }
 
 
@@ -485,8 +713,8 @@ fieldset {
 /*
 	font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Verdana, "DejaVu Sans", "Bitstream Vera Sans", Arial, sans-serif;
 */
-	padding-left: 0.8em;
-	padding-right: 0.8em;
+	padding-left: 0.75em;
+	padding-right: 0.75em;
  }
  
  
@@ -499,13 +727,12 @@ fieldset {
 
 #iconpicker-window-container {
 	position: absolute;
-	top: 1px;
+	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	padding: 0.5em 0.25em 1em 0.25em;
-	overflow-x: hidden;
-	overflow-y: auto;
+	padding: 2px 2px 0.75em 2px;
+	overflow: auto;
 }
 
 
@@ -513,8 +740,9 @@ fieldset {
 	float: left;
 	width: 7em;
 	height: 7em;
-	margin: 0.75em;
+	margin: 0.7em;
 	text-align: center;
+	-webkit-user-select: none;
 }
 
 
@@ -547,7 +775,7 @@ fieldset {
 
 .iconpicker-filename {
 	position: relative;
-	font-size: 85%;
+	font-size: 87.5%;
 	line-height: 1.2em;
 	text-align: center;
 	padding-top: 0.2em;
@@ -557,12 +785,12 @@ fieldset {
 /*### END new section for Bookmark Icon Picker window */
  
  
-/*### added */
 #tray-widgets-picker {
 	position: fixed;
 	top: 0;
 	width: 100%;
-	background-color: #384048;	 /*### added */
+	/*### background-color: #384048;   */
+	background-color: #202020;	 /*### changed to match tray */
 }
 
 
@@ -575,11 +803,10 @@ fieldset {
 	position: absolute;
 	top: 33px;
 	width: 100%;
-	bottom: 5px;
+	bottom: 4px;
 	color: white;
 	font-size: 100%;
 	text-align: center;
-	z-index: 1005;
 	display: none;
 }
 
@@ -591,34 +818,34 @@ fieldset {
 
 #tray-widgets-window-container {
 	position: absolute;
-	top: 1px;
+	top: 0;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	padding: 0.25em;
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: auto;	
 }
 
 
 .add-remove-btn {
 	position: relative;
-	font-size: 85%;
+	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
+	font-size: 87.5%;
 	line-height: 1.25em;
 	padding-top: 0;
 	padding-bottom: 0.15em;
 	padding-left: 0.3em;
 	padding-right: 0.3em;
-	/*
-	font-weight: normal;
-	*/
 	text-align: center;
 	color: white;
-	border: 0.15em solid white;
-	border-radius: 0.47em;
+	border: 0.15em solid white;   /*### (width setting is for fall-back compatibility) */
+	border-width: calc(0.6px + 0.13em);
+	border-radius: 0.45em;   /*### for fall-back compatibility */
+	border-radius: calc(1.5px + 0.35em);
 	background: linear-gradient(to bottom, #C02020, #802020);
 	cursor: pointer;
 	z-index: 9;
+	-webkit-user-select: none;
 }
 
 
@@ -634,13 +861,18 @@ fieldset {
 }
 
 
-.remove-btn {
-	width: 5.35em;
-	margin-top: -0.45em;
-	margin-bottom: -1.25em;
+.remove-btn-container {
+	width: 4.5em;
 	margin-left: 0.25em;
+	height: 1.5em;
+	margin-top: -0.4em;
+	margin-bottom: -1.1em;
+}
+
+
+.remove-btn {
+	width: 100%;
 	display: none;
-	z-index: 9;
 }
 
 
@@ -648,8 +880,9 @@ fieldset {
 	float: left;
 	width: 5em;
 	height: 8.15em;
-	margin: 0.75em 0.5em 1em 0.5em;
+	margin: 0.65em 0.5em 1.1em 0.5em;
 	background-color: transparent;
+	-webkit-user-select: none;
 }
 
 
@@ -667,19 +900,25 @@ fieldset {
 	float: left;
 	width: 7em;
 	height: 8.15em;
-	margin: 0.75em;
+	margin: 0.7em;
 	text-align: center;
+	-webkit-user-select: none;
+}
+
+
+.widget-add-button-container {
+	width: 6.3em;
+	margin-left: 0.35em;
+	height: 1.5em;
+	margin-top: -0.4em;
+	margin-bottom: -1.1em;
 }
 
 
 .widget-add-button {
-	width: 7.45em;
-	margin-top: -0.45em;
-	margin-bottom: -1.25em;
-	margin-left: 0.4em;
-	display: block;
-	opacity: 0;
+	width: 100%;
 	z-index: 1;
+	opacity: 0;
 }
 
 

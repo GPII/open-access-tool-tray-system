@@ -29,6 +29,7 @@ if (login_check($mysqli) != true) {
 	$loggedInFlag = "true";
 	$loggedInUser = $_SESSION['username'];
 }
+
 //get widget data
 if (($h = opendir(WIDGET_ABS_PATH)) != false) {
 	while( ($f = readdir($h)) !== false) {
@@ -120,8 +121,8 @@ echo "var settingsData = " . $settingsData . ";\n";
 echo "\n";
 
 echo "var baseURL='".$baseURL . "';\n";
-echo "var widgetsPath='/". BASEDIR . "/" . WIDGETSDIR . "/';\n";
-echo "var bookmarkIconsPath='/". BASEDIR . "/" . BOOKMARKICONSDIR . "/';\n";
+echo "var widgetsPath='/". BASEDIR . WIDGETSDIR . "/';\n";
+echo "var bookmarkIconsPath='/". BASEDIR . BOOKMARKICONSDIR . "/';\n";
 echo "\n";
 
 echo "var loggedInFlag = ".$loggedInFlag.";\n";
@@ -142,6 +143,7 @@ function to_name($n) {
 
 //load .js files
 
+/* //---### Moved to end of <body> in main.php, and done in-line
 (function() {
 	var d = document;
 	
@@ -153,8 +155,9 @@ function to_name($n) {
 			if (scripts[current]) {
 				var script = d.createElement('script');
 				script.onload = loadNext;
-				script.src = baseURL+scripts[current] + '?v=<?php echo time(); ?>';
+				script.src = baseURL + scripts[current] + '?v=<?php echo time(); ?>';
 				d.head.appendChild(script);
+			} else {
 			}
 			current++;
 		}
@@ -164,4 +167,5 @@ function to_name($n) {
 		document.getElementById('tray-widgets-window').style.display = '';
 	}
 })();
+*/ //---###
 

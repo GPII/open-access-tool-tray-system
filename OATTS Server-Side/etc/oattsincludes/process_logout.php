@@ -17,5 +17,5 @@ setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"]
  
 // Destroy session 
 session_destroy();
-header("Location: " . $baseURL . '/index.html');
+header("Location: " . $baseURL . '/loggedout.php?v=' . time());
 exit();

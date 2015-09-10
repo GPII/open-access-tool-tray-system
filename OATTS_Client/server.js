@@ -1,8 +1,8 @@
 //---### var MAIN_IP = "oatts.local";
-var MAIN_IP = "oatts.trace.wisc.edu";   //---###
-
+//var MAIN_IP = "oatts.trace.wisc.edu";   //---###
+var MAIN_IP = "ccc.raisingthefloor.org";
 //---### var PROTOCOL = "http://";
-var PROTOCOL = "https://";   //---###
+var PROTOCOL = "http://";   //---###
 
 var MAIN_PATH = PROTOCOL + MAIN_IP + "/oatts/";
 var MAIN_URL = MAIN_PATH + "login.php";

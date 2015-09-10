@@ -1,7 +1,11 @@
+//---### This file no longer being used
+   
 <?php
 
 ?>
 
+
+/* //---### Moved from here to provider.js
 var globalID = "";
 var widgetExtrnData = "";
 var loadedWidgetName = "";
@@ -9,6 +13,8 @@ var myHash="";
 var myFolder="";
 var myName="";
 var iframe = true;
+*/ //---###
+
 
 <?php
 /*

@@ -1,4 +1,13 @@
 
+//---### Moved to here from picker.php
+////// var globalID = "";
+var widgetExtrnData = "";
+var loadedWidgetName = "";
+var myHash="";
+var myFolder="";
+var myName="";
+var iframe = true;
+
 
 //********************************************************//
 function favBuild1(idStr, urlStr, provStr) {
@@ -7,21 +16,15 @@ function favBuild1(idStr, urlStr, provStr) {
 		"<div class=\"flexcontainer\">" +
 			
 			"<span class=\"favinfo\" id=\"info" + idStr + "\">" +
-				"<img class=\"listicon\" src=\"images/up_down_arrow.png\">" +
+				"<img class=\"listicon\" alt=\"\" src=\"images/up_down_arrow.png\">" +
 				"<a id=\"link" + idStr + "\" href=\"" + urlStr + "\" target=\"_blank\" class=\"favlink closeonaction\" title=\"" + urlStr + "\">" + 
 					"<span id=\"label" + idStr + "\">" + provStr + "</span>" +
 				"</a>" +
 			"</span>" +
 			
-			/* //---###//---###//---###//---###//---###//---###//---###
-			"<span onclick=\"openAction('" + idStr + "')\" tabindex=\"0\" class=\"openfavactions\">" + 
-				"<span id=\"aOpenAction" + idStr + "\" title=\"More or Less Edit Options\">More...</span>" +
-			"</span>" +
-			*/ //---###//---###//---###//---###//---###//---###//---###
 			"<button type=\"button\" onclick=\"openAction('" + idStr + "')\" id=\"aOpenAction" + idStr + 
 				"\" tabindex=\"0\" class=\"openfavactions provbutton\" title=\"More or Less Edit Options\">" +
 			"More...</button>" +
-			//---###//---###//---###//---###//---###//---###//---###
 			
 		"</div>" +
 		
@@ -33,97 +36,45 @@ function favBuild1(idStr, urlStr, provStr) {
 			
 			"<div class=\"flexAction5\">" +
 				
-				/* //---###//---###//---###//---###//---###//---###
-				"<div class=\"flexAction1\">" +
-					"<span onclick=\"moveUp('" + idStr + "')\" tabindex=\"0\" class=\"favactions\" title=\"Move up in list\">" + 
-						"<img src=\"images/up_arrow.png\" class=\"provbuttonicon\" />" +
-						"<span class=\"favactiondetail\">Move Up</span>" +
-					"</span>" +
-				"</div>" +
-				
-				"<div class=\"flexAction2\">" +
-					"<span onclick=\"moveDown('" + idStr + "')\" tabindex=\"0\" class=\"favactions\" title=\"Move down in list\">" + 
-						"<img src=\"images/down_arrow.png\" class=\"provbuttonicon\" />" +
-						"<span class=\"favactiondetail\">Move Down</span>" +
-					"</span>" + 
-				"</div>" +
-				*/ //---###//---###//---###//---###//---###//---###
 				"<div class=\"flexAction1\">" +
 					"<button type=\"button\" onclick=\"moveUp('" + idStr + "')\" tabindex=\"0\" class=\"favactions provbutton\" title=\"Move up in list\">" + 
-						"<img src=\"images/up_arrow.png\" class=\"provbuttonicon\" />" +
+						"<img src=\"images/up_arrow.png\" alt=\"\" class=\"provbuttonicon\" />" +
 					"Move Up</button>" +
 				"</div>" +
 				
 				"<div class=\"flexAction2\">" +
 					"<button type=\"button\" onclick=\"moveDown('" + idStr + "')\" tabindex=\"0\" class=\"favactions provbutton\" title=\"Move down in list\">" + 
-						"<img src=\"images/down_arrow.png\" class=\"provbuttonicon\" />" +
+						"<img src=\"images/down_arrow.png\" alt=\"\" class=\"provbuttonicon\" />" +
 					"Move Down</button>" + 
 				"</div>" +
-				//---###//---###//---###//---###//---###//---###
 				
 			"</div>" +
 			
 			"<div class=\"flexAction5\">" +
 				
-				/* //---###//---###//---###//---###//---###//---###
 				"<div class=\"flexAction3\">" +
-					//event click on editentry class
-					//---###//---### "<span id=\"\" idstr=\"" + idStr + "\" tabindex=\"0\" class=\"favactions editentry\" title=\"Edit\">" + 
-					"<span idstr=\"" + idStr + "\" tabindex=\"0\" class=\"favactions editentry\" title=\"Edit\">" + //---###//---###
-					
-						"<img src=\"images/pencil.png\" class=\"provbuttonicon\" />" +
-						"<span class=\"favactiondetail\">Edit</span>" +
-					"</span>"+ 
-				"</div>" +
-				
-				"<div class=\"flexAction3\">" +
-					"<span onclick=\"duplicate('" + idStr + "')\" tabindex=\"0\" class=\"favactions\" title=\"Make a copy\">" + 
-						"<img src=\"images/copy_favorite.png\" class=\"provbuttonicon\" />" +
-						"<span class=\"favactiondetail\">Copy</span>" +
-					"</span>" + 
-				"</div>" +
-				
-				"<div class=\"flexAction3\">" +
-					"<span onclick=\"bookmark('" + idStr + "')\" tabindex=\"0\" class=\"favactions\" title=\"Add to tray\">" + 
-						"<img src=\"images/to_tray.png\" class=\"provbuttonicon\" />" +
-						"<span class=\"favactiondetail\">Tray</span>" +
-					"</span>" +
-				"</div>" +
-				
-				"<div class=\"flexAction3\">" +
-					"<span onclick=\"deleteProvider('" + idStr + "')\" tabindex=\"0\" class=\"favactions\" title=\"Delete\">" + 
-						"<img src=\"images/trash_can.png\" class=\"provbuttonicon\" />" +
-						"<span class=\"favactiondetail\">Delete</span>" +
-					"</span>" +
-				"</div>" +
-				*/ //---###//---###//---###//---###//---###//---###
-				"<div class=\"flexAction3\">" +
-					//event click on editentry class
-					//---###//---### "<span id=\"\" idstr=\"" + idStr + "\" tabindex=\"0\" class=\"favactions editentry\" title=\"Edit\">" + 
-					"<button type=\"button\"  idstr=\"" + idStr + "\" tabindex=\"0\" class=\"favactions provbutton editentry\" title=\"Edit\">" + //---###//---###
-						"<img src=\"images/pencil.png\" class=\"provbuttonicon\" />" +
+					"<button type=\"button\"  idstr=\"" + idStr + "\" tabindex=\"0\" class=\"favactions provbutton editentry\" title=\"Edit\">" +
+						"<img src=\"images/pencil.png\" alt=\"\" class=\"provbuttonicon\" />" +
 					"Edit</button>"+ 
 				"</div>" +
 				
 				"<div class=\"flexAction3\">" +
 					"<button type=\"button\"  onclick=\"duplicate('" + idStr + "')\" tabindex=\"0\" class=\"favactions provbutton\" title=\"Make a copy\">" + 
-						"<img src=\"images/copy_favorite.png\" class=\"provbuttonicon\" />" +
+						"<img src=\"images/copy_favorite.png\" alt=\"\" class=\"provbuttonicon\" />" +
 					"Copy</button>" + 
 				"</div>" +
 				
 				"<div class=\"flexAction3\">" +
 					"<button type=\"button\"  onclick=\"bookmark('" + idStr + "')\" tabindex=\"0\" class=\"favactions provbutton\" title=\"Add to tray\">" + 
-						"<img src=\"images/to_tray.png\" class=\"provbuttonicon\" />" +
+						"<img src=\"images/to_tray.png\" alt=\"\" class=\"provbuttonicon\" />" +
 					"Tray</button>" +
 				"</div>" +
 				
 				"<div class=\"flexAction3\">" +
 					"<button type=\"button\"  onclick=\"deleteProvider('" + idStr + "')\" tabindex=\"0\" class=\"favactions provbutton\" title=\"Delete\">" + 
-						"<img src=\"images/trash_can.png\" class=\"provbuttonicon\" />" +
+						"<img src=\"images/trash_can.png\" alt=\"\" class=\"provbuttonicon\" />" +
 					"Delete</button>" +
 				"</div>" +
-				//---###//---###//---###//---###//---###//---###
-
 				
 			"</div>" +
 			
@@ -147,24 +98,12 @@ function providersBuild1(idStr, urlStr, provStr) {
 			"</span>" +
 			"<span class=\"provideractions\">" +
 			
-				/* //---###//---###//---###//---###//---###//---###
-				"<span onclick=\"promote('" + idStr + "')\" tabindex=\"0\" class=\"providersaction\" title=\"Add to Favorites\">" + 
-					"<img src=\"images/favorites.png\" class=\"provbuttonicon\" />" +
-					"<span class=\"providersdetail\">Favorite</span>" +
-				"</span>" +
-				
-				"<span onclick=\"bookmark('" + idStr + "')\" tabindex=\"0\" class=\"providersaction\" title=\"Add to tray\">" + 
-					"<img src=\"images/to_tray.png\" class=\"provbuttonicon\" />" +
-					"<span class=\"providersdetail\">Tray</span>" +
-				"</span>" +
-				*/ //---###//---###//---###//---###//---###//---###
 				"<button type=\"button\" onclick=\"promote('" + idStr + "')\" tabindex=\"0\" class=\"providersaction provbutton\" title=\"Add to Favorites\">" + 
-					"<img src=\"images/favorites.png\" class=\"provbuttonicon\" />" +
+					"<img src=\"images/favorites.png\" alt=\"\" class=\"provbuttonicon\" />" +
 				"Favorite</button>" +
 				"<button type=\"button\" onclick=\"bookmark('" + idStr + "')\" tabindex=\"0\" class=\"providersaction provbutton\" title=\"Add to tray\">" + 
-					"<img src=\"images/to_tray.png\" class=\"provbuttonicon\" />" +
+					"<img src=\"images/to_tray.png\" alt=\"\" class=\"provbuttonicon\" />" +
 				"Tray</button>" +
-				//---###//---###//---###//---###//---###//---###
 				
 			"</span>"+
 		"</div>" +
@@ -241,7 +180,7 @@ function bookmark(idStr) {
 
 //********************************************************//
 function deleteProvider(idStr) {
-	clearTooltips();   //---### prevents stuck tooltip for deleted DOM element
+	clearTooltips();   //---### to prevent stuck tooltip for deleted DOM element
 	var tmp = document.getElementById(idStr);
 	tmp.parentNode.removeChild(tmp);
 	saveUserDataWriteNow();
@@ -654,7 +593,7 @@ function updateListItem(idStr, label, link) {
 //********************************************************//
 
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
 	if (iframe == false) {
 		loadProviderPage(myHash, myName, myFolder);
 	}
@@ -723,15 +662,15 @@ $(function() {
 	function checkLength( field, fieldName, min, max ) {
 		if ( field.val().length < min && min <= 1 ) {
 			field.addClass( "ui-state-error" );
-			updateTips( ">>> " + fieldName + " field must not be blank." );
+			updateTips( ">>> " + fieldName + " must not be blank." );
 			return false;
 		} else if (field.val().length < min ) {
 			field.addClass( "ui-state-error" );
-			updateTips( ">>> " + fieldName + " field must be at least " + min + " characters long." );
+			updateTips( ">>> " + fieldName + " must be at least " + min + " characters." );
 			return false;
 		} else if ( field.val().length > max ) {
 			field.addClass( "ui-state-error" );
-			updateTips( ">>> " + fieldName + " field must be no more than " + max + " characters long." );
+			updateTips( ">>> " + fieldName + " must be no more than " + max + " characters." );
 			return false;
 			
 		/*
@@ -798,7 +737,7 @@ $(function() {
 		bValid = bValid && checkLength( url, "The Address", 1, 150);
 		bValid = bValid && checkTextHtmlSafe(name, "The Provider Name", "\"'<>");
 		bValid = bValid && checkUrlHtmlSafe(url, "The Address");
-		//---### if (document.getElementById('editiconDiv').style.display != "none") {
+		//---### if (document.getElementById("editiconDiv").style.display != "none") {
 		//---###	bValid = bValid && checkUrlHtmlSafe(img, "The Icon URL");
 		//---### }
 		return bValid;
@@ -807,12 +746,14 @@ $(function() {
 	
 	//******************//
 	$( "#insbutton" ).on("click", function() {
-		prepToOpenDialog(addNewFavoriteDialog, this, null, 360);
+		addNewFavoriteDialog(this);
 	});
 	
+	/* //---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
 	function addNewFavorite() {
-		prepToOpenDialog(addNewFavoriteDialog, this, null, 360);
+		addNewFavoriteDialog(this);
 	}
+	*/ //---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
 	
 	
 	function addNewFavoriteDialog(item) {
@@ -821,9 +762,7 @@ $(function() {
 		//build edit element
 		name.val("");
 		url.val("");
-		document.getElementById('editiconDiv').style.display = "none";
-		tips.text( ">>>" );		// dummy value to force .dialog( "open" ) to position the dialog higher, so there is more room
-								//    for the dialog to expand when a field validation message needs to be displayed.
+		document.getElementById("editiconDiv").style.display = "none";
 		
 		var myButtons = {
 			"Save": function() {
@@ -839,8 +778,11 @@ $(function() {
 					$("#favlist").sortable("refresh");
 					saveUserDataWriteNow();
 					$( this ).dialog( "close" );
+				} else {
+					centerDialog("dialog-form");
 				}
 			},
+			
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
@@ -852,11 +794,7 @@ $(function() {
 	
 	//******************//
 	$( "#imgpicker" ).on("click",function() {
-		
-		//---### prepToOpenAlertDialog(imagePickerDialog, img.val());
-		
-		chrome.runtime.sendMessage(thisAppId, { open_icon_picker: baseURL + "/icon_picker.php" });   //---###//---###//---###//---###
-		
+		chrome.runtime.sendMessage(thisAppId, { open_icon_picker: baseURL + "/icon_picker.php" });
 	});
 	
 	
@@ -865,8 +803,7 @@ $(function() {
 		// if not a bookmark...must be a widget
 		if ($(this).parents('.tray-widget').attr('bookmark') != null) {
 			// must be a bookmark
-			prepToOpenDialog(editBookmarkDialog, $(this).parents('.tray-widget'), null, 480);
-			
+			editBookmarkDialog($(this).parents('.tray-widget'));
 		}
 	});
 	
@@ -879,20 +816,19 @@ $(function() {
 		//debugger;
 		//show url
 		
-		document.getElementById('editiconDiv').style.display = "";
+		document.getElementById("editiconDiv").style.display = "";
 		
 		var linkNode = $(item).children("a").last();
 		var nameDiv = $(linkNode).children("div").last();
 		var urlStr = $(linkNode).attr("href");
 		var provStr = $(nameDiv).text();
-		var imgStr = $(linkNode).children("img").first().attr("src");
+		var iconPath = $(linkNode).children("img").first().attr("src");
 		name.val(provStr);
 		url.val(urlStr);
-		//---### img.val(imgStr);
-		document.getElementById("iconpathtext").textContent = imgStr;
-		document.getElementById("bookmark-dialog-icon").src = imgStr;
-		tips.text( ">>>" );		// dummy value to force .dialog( "open" ) to position the dialog higher, so there is more room
-								//    for the dialog to expand when a field validation message needs to be displayed.
+		//---### img.val(iconPath);
+		document.getElementById("iconpathtext").textContent = iconPath;
+		document.getElementById("bookmark-dialog-icon").src = iconPath;
+		document.getElementById("bookmark-dialog-widget").title = iconImageLabel(iconPath);
 		
 		var myButtons = {
 			"Save": function() {
@@ -913,14 +849,18 @@ $(function() {
 					$(nameDiv).text(name.val());
 					saveTrayDataWriteNow();
 					$( this ).dialog( "close" );
+				} else {
+					centerDialog("dialog-form");
 				}
 			},
-			"Remove": function () {
+			
+			"Remove": function() {
 				// post warning message
-				document.getElementById('editiconDiv').style.display = "block";   // "flag" for close function to *not* restore window size
+				document.getElementById("editiconDiv").style.display = "block";   // "flag" for close function to *not* restore window size
 				$( this ).dialog( "close" );
-				prepToOpenAlertDialog(openRemoveConfirmDialog, item);
+				openRemoveConfirmDialog(item);
 			},
+			
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
@@ -933,7 +873,7 @@ $(function() {
 	
 	//******************//
 	$("ul#favlist").on("click", ".editentry", function() {
-		prepToOpenDialog(editFavoriteDialog, this, null, 360);
+		editFavoriteDialog(this);
 	});
 	
 	
@@ -944,9 +884,7 @@ $(function() {
 		//build edit element
 		name.val(document.getElementById("label" + idStr).textContent);
 		url.val(document.getElementById("link" + idStr).getAttribute("href"));
-		document.getElementById('editiconDiv').style.display = "none";
-		tips.text( ">>>" );		// dummy value to force .dialog( "open" ) to position the dialog higher, so there is more room
-								//    for the dialog to expand when a field validation message needs to be displayed.
+		document.getElementById("editiconDiv").style.display = "none";
 		
 		var myButtons = {
 			"Save": function() {
@@ -962,8 +900,11 @@ $(function() {
 					$("#favlist").sortable("refresh");
 					saveUserDataWriteNow();
 					$( this ).dialog( "close" );
+				} else {
+					centerDialog("dialog-form");
 				}
 			},
+			
 			"Save As New Entry": function() {
 				if ( fieldsValidated() ) {
 					//fix url if no protocol specified
@@ -979,6 +920,7 @@ $(function() {
 					$( this ).dialog( "close" );
 				}
 			},
+			
 			Cancel: function() {
 				$( this ).dialog( "close" );
 			}
@@ -993,30 +935,38 @@ $(function() {
 		height: "auto",
 		width: "auto",
 		position: "center",
-		draggable : true,
-		resizable: true,
+		draggable: false,   //---### was set to true
+		resizable: false,   //---### was set to true
 		//minHeight: 290,
 		//minWidth: 380,
 		modal: true,
 		closeOnEscape: true,
+		
 		open: function() {
 			clearTooltips();   //---### to prevent mis-located tooltip after dialog opens
-			$( "#dialog-form" ).dialog( "option", "width", Math.max( Math.min(800,  Math.round(window.innerWidth * 0.95)), 380) );
+			tips.text( "" );
+			
+			var dialogNode = document.getElementById("dialog-form").parentNode;
+			dialogNode.style.fontSize = dialogZoomSetting() + "%";
+			
+			$( "#dialog-form" ).dialog( "option", "width", dialogWidth() );
 			$( "#dialog-form" ).dialog( "option", "height", "auto" );
 			$( "#dialog-form" ).dialog( "option", "position", "center" );
-			tips.text( "" );
 			editBookmarkDialogOpen = false;
+			
+			chrome.runtime.sendMessage(thisAppId, { min_dialog_window_height: dialogNode.offsetHeight + 20 + Math.round(4.5 * 16 * dialogZoomSetting() / 100) });   // set min_dialog_window_height to 0 when closing dialog		
 		},
+		
 		close: function() {
 			allFields.val( "" ).removeClass( "ui-state-error" );
 			tips.text( "" );
-			if (document.getElementById('editiconDiv').style.display != "block") {
+			if (document.getElementById("editiconDiv").style.display != "block") {
 				chrome.runtime.sendMessage(thisAppId, { min_dialog_window_height: 0 });
 			}
-			if (document.getElementById('editiconDiv').style.display != "none") {
+			if (document.getElementById("editiconDiv").style.display != "none") {
 				chrome.runtime.sendMessage(thisAppId, { close_icon_picker: true });
 			}
-			document.getElementById('editiconDiv').style.display = "none";
+			document.getElementById("editiconDiv").style.display = "none";
 			clearTooltips();   //---### to prevent mis-located tooltip after dialog closes
 		}
 	});
@@ -1030,10 +980,18 @@ $(function() {
 				//---### img.val(iconPath);
 				document.getElementById("iconpathtext").textContent = iconPath;
 				document.getElementById("bookmark-dialog-icon").src = iconPath;
+				document.getElementById("bookmark-dialog-widget").title = iconImageLabel(iconPath);
 			}
 		}
 	});
 	
+	
+	function iconImageLabel(iconPath) {
+		var tempArray = iconPath.split('/');
+		var tempString = tempArray[tempArray.length - 1];
+		return tempString.substr(0, tempString.lastIndexOf('.'))  + " icon selected";
+	}
+
 	
 	//******************//
 	///---###//---### $("ul#favlist,ul#providerlist").on("mouseenter","li", function() {
