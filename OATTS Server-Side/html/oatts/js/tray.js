@@ -1330,7 +1330,7 @@ window.addEventListener('message', function(event) {
 	if ("window_height_info" in eventData) {
 		var windowHeightInfo = eventData.window_height_info;
 		
-		//// setTimeout(function() {
+		setTimeout(function() {   //---###//---###//---###   2 June 2015 - TEST HACK to deal with window.innerHeight not yet being up-to-date when the above message is received
 		
 		if ("tray_height" in windowHeightInfo && "show_empty_popup" in windowHeightInfo) {
 			////// var trayHeight = windowHeightInfo.tray_height;   //---###//---### removed as   TEST   TEST
@@ -1355,7 +1355,7 @@ window.addEventListener('message', function(event) {
 			}
 		}
 		
-		//// }, 200);
+		}, 20);
 		
 	}
 	

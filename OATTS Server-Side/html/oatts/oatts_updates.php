@@ -3,7 +3,7 @@ include './includes/path.php';
 include_once ROOT_PATH . '/lib.php';
 
 //---### NOTE: $fileName, $appId, and $versionNumber must be up-to-date for the relevant App version & server instance(s) of OATTS
-$newestVersionNumber = '2.51';
+$newestVersionNumber = '2.52';
 $fileName = "OATTS_Client(" . SERVER_CONTEXT_LABEL . ").crx";
 
 if (SERVER_CONTEXT_LABEL === 'CAE-Sandbox') {   // for CAE OattsSandbox server

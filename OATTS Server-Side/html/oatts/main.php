@@ -101,7 +101,7 @@ if (login_check($mysqli) != true) {
 					<h1 id="aboutTitle">About OATTS</h1>
 					<div id="oatts-info">
 						<p id="version-info"></p>
-						<p>Copyright &copy; 2013-2015<br>Trace Center</p>
+						<p>Copyright &copy; 2013-2016<br>Trace Center</p>
 					</div>
 				</div>
 				
