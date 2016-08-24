@@ -1,8 +1,29 @@
 {
-	"name": "CAE OATTS Client beta",
-	"version": "2.3",
+	"version": "2.52",
+	"minimum_chrome_version": "41.0",
 	"manifest_version": 2,
-	"minimum_chrome_version": "38.0",
+	
+	
+	//---### include only *ONE* of the following "name" definitions
+	//---### NOTE: including "{MakesGuests}" in the App name enables writing to guest-mode accounts
+	//---###       (*NOT* intended for general distribution to the "public")
+	// "name": "OATTS beta (CAE Sandbox)",
+	// "name": "OATTS beta (CAE Sandbox) {MakesGuests}",
+	// "name": "OATTS beta (CAE)",
+	// "name": "OATTS beta (CAE) {MakesGuests}",
+	"name": "OATTS beta (RtF)",
+	// "name": "OATTS beta (RtF) {MakesGuests}",
+	// "name": "OATTS beta",
+	//---### END "name" definitions
+	
+	
+	//---### include only *ONE* of the following "update_url" definitions
+	// "update_url": "https://oattssandbox.trace.wisc.edu/oatts/oatts_updates.php",
+	// "update_url": "https://oatts.trace.wisc.edu/oatts/oatts_updates.php",
+	"update_url": "https://oatts.raisingthefloor.org/oatts_updates.php",
+	//---### END "update_url" definitions
+	
+	
 	"app": {
 		"background": {
 			"scripts": [
@@ -10,14 +31,14 @@
 			]
 		}
 	},
-	"icons": { 
+	"icons": {
 		"128": "images/icon_128.png"
 	},
 	"externally_connectable": {
 		"matches": [
-			"*://oatts.local/*",
+			"*://oattssandbox.trace.wisc.edu/*",
 			"*://oatts.trace.wisc.edu/*",
-			"*://oattssandbox.trace.wisc.edu/*"
+			"*://oatts.raisingthefloor.org/*"
 		]
 	},
 	"permissions": [

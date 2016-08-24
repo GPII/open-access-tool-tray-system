@@ -6,14 +6,13 @@
 
 <title>Bookmark Icon Picker</title>
 
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" type="text/css" href="menus.css">
 
 </head>
 
 <body data-window-type="icon_picker_window">
 
-<!-- added menu elements ///---###///---###///---### -->
 <div id="menu" style="display:none">
 	<div id="menubody">
 		<ul id="menulist">
@@ -21,10 +20,10 @@
 	</div>
 	<div id="menubottom"></div>
 </div>
-<!-- END added menu elements ///---###///---###///---### -->
 
 <div id="content">
 	<webview id="web-page-frame" style="width:100%; height:100%;" tabindex="0"></webview>
+	<div id="loading-background" style="position: absolute; top: 0; height: 100%; width: 100%; background-color: #202020;"></div>
 </div>
 
 <script src="titlebar.js"></script>

@@ -1,38 +1,23 @@
 
 * {margin:0; padding:0;}
 
+
 div#menu {
-	position: fixed;   /*### was absolute */
+	position: fixed;
 	top: 25px;
 	left: 35px;
 	width: 184px;
 	background: url(images/menu/menu_top.png) top no-repeat;
 	padding-top: 2px;
-	z-index: 99999;
+	z-index: 99;
 }
 
 
-.litext {
-	/*### padding-left: 0px; */
-	/*### padding-bottom: 3px; */
-}
-
-
-/*### added, then killed
-.lipad {
-	margin-right: 30px;
-}
-*/
-
-
-/*### added */
 .menuicon {
 	margin-right: 9px;
 	margin-bottom: -5px;
 }
 
-
-//div#menubody {background:url(images/menu/menu_body.png) repeat-y; padding-left:30px;}
 
 div#menubody {
 	background: url(images/menu/menu_body.png) repeat-y;
@@ -46,33 +31,26 @@ div#menubottom {
 
 
 ul#menulist {
-	width: 177px;   /*### was 184px */
-	margin-left: 1px;   /*### added */
+	width: 177px;
+	margin-left: 1px;
 	list-style-type: none;
 }
 
 
-//ul#menulist li {height: 28px; background: url(images/menu/menu_3.png) ;}
-
 ul#menulist li {
-	height: 19px;   /*### was 28px */
-	/*### background: url(images/menu/menu_body.png) repeat-y; */
+	height: 19px;
 }
 
 
 ul#menulist a {
 	width: 173px;
 	height: 17px;
-	
-	/*### font: bold 11px Verdana, Arial, sans-serif;   */
-	
 	font-family: "Trebuchet MS", Arial, "Nimbus Sans L", "Liberation Sans", FreeSans, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
-
 	color: #01072A;
 	text-decoration: none;
-	padding: 1px 0 1px 4px;   /*### was  5px 0 0 5px */
+	padding: 1px 0 1px 4px;
 	display: block !important;
 	display: inline-block;
 }
@@ -82,6 +60,3 @@ ul#menulist a:hover {
 	color: white;
 	background: url(images/menu/menu_hover.png) left repeat-y;
 }
-
-
-/* color:#01072A; border-left:#75c5de 10px solid; #3399ff*/

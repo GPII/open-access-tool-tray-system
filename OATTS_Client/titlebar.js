@@ -1,20 +1,22 @@
 //---### debugger;
 
-var titlebarFocusColor = "#98b8d8";
-var titlebarNotFocusColor = "#a0a0a0";
-var outerFrameWidth = 3;
-var loginStartHeight = 350;
+////// var titlebarFocusColor = "#98b8d8";
+////// var titlebarNotFocusColor = "#a0a0a0";
+var loginStartWidth = 800;
+var loginStartHeight = 600;
 var NameOfProgram = "OATTS";
 
-var savedDevicePixelRatio = 1.0;
+var frame2WebviewPixelRatio = 1;
 
 var windowSettingsObj = {
-	window_width: 600,
-	screen_left_x: Math.round((screen.availWidth - 600) / 2),
-	screen_bottom_y: Math.round((screen.availHeight + 600) / 2),
+	window_width: loginStartWidth,
+	popup_window_width: loginStartWidth,
+	screen_left_x: Math.round(window.screen.availLeft + (screen.availWidth - loginStartWidth) / 2),
+	screen_bottom_y: Math.round(window.screen.availTop + (screen.availHeight + loginStartHeight) / 2),
 	is_maximized: false,
 	tray_height: 150,
-	popup_height: 450
+	popup_height: 450,
+	signin_zoom_setting: 160
 };
 
 var userSettingsObj = { thin_titlebar: false, show_widget_names: true, show_tooltips: true, zoom_setting: 100, widgets_zoom_setting: 100 };
@@ -24,8 +26,7 @@ var trayWebviewLoaded = false;
 var popupPanelShowing = false;
 var isMinimized = false;   // used only in the onBoundsChanged event listener
 var dialogIsShowing = false;
-
-var menuIsShowing = false;   //---###//---###//---###//---###//---###
+var menuIsShowing = false;
 
 var onBoundsChangedTimer = null;
 
@@ -35,8 +36,8 @@ function log(message) {
 }
 
 
-function convertToScreenPixels(cssPixelSize) {
-	return Math.round(cssPixelSize * savedDevicePixelRatio);
+function convertToScreenPixels(sizeInCssPixels) {
+	return Math.round(sizeInCssPixels * frame2WebviewPixelRatio);
 }
 
 
@@ -57,7 +58,7 @@ chrome.contextMenus.onClicked.addListener(function(info) {
 */ //---###//---###//---###//---###//---###//---###//---###//---###
 
 
-//---###chrome.contextMenus.removeAll( function () {
+//---###chrome.contextMenus.removeAll( function() {
 //---###	chrome.contextMenus.create({
 //---###		title: "Log out",
 //---###		contexts: ["image"],
@@ -84,7 +85,7 @@ function isDevMode() {
         var mUrl = chrome.runtime.getURL('manifest.json');
         var xhr = new XMLHttpRequest();
         xhr.open("GET", mUrl, false);
-        xhr.onload = function () {
+        xhr.onload = function() {
             var json = JSON.parse(this.responseText);
             __devMode = !('update_url' in json);
             console.log("__devMode: " + __devMode);
@@ -105,8 +106,8 @@ function menuEvent(e) {
 	//while (reltg != src && reltg.nodeName != 'BODY')
 	while (reltg != elem && reltg.nodeName != 'BODY')
 		reltg= reltg.parentNode
-	if (reltg== elem) return;
-	//if (reltg== src) return;
+	if (reltg == elem) return;
+	//if (reltg == src) return;
 	// Mouseout took place when mouse actually left layer
 	// Handle event
 	
@@ -114,7 +115,7 @@ function menuEvent(e) {
 	elem.onmouseout = null;
 	elem.style.display = "none";
 	*/
-	hideMenu();   //---###//---###//---###
+	hideMenu();   //---###//---###
 	
 }
 
@@ -130,13 +131,7 @@ function hideMenuCheck(e) {
 	while (src != elem && src.nodeName != 'BODY')
 		src = src.parentNode
 	if (src == elem) return;
-	
-	/*
-	elem.onmouseout = null;
-	elem.style.display = "none";
-	//document.onmouseup = null;
-	*/
-	hideMenu();   //---###//---###//---###
+	hideMenu();
 }
 
 
@@ -146,37 +141,32 @@ function displayMenu(ev) {
 		//was visible. now hide
 		hideMenu();
 	} else {
-	
-		//---###//---###//---###//---###
+		elem.style.display = "";
 		if (mainWebviewLoaded && trayWebviewLoaded) {
 			menuIsShowing = true;
-			resizeMainWindow(85);
+			resizeMainWindow(Math.round(elem.offsetHeight * frame2WebviewPixelRatio));
 		}
-		//---###//---###//---###//---###
-		
-		elem.style.display = "";
 		elem.onmouseout = menuEvent;
 		document.onmouseup = hideMenuCheck;
 	}
 }
 
 
-function hideMenu() {
-	
-	//---###//---###//---###//---###
-	if (mainWebviewLoaded && trayWebviewLoaded) {
-		menuIsShowing = false;
-		resizeMainWindow(0);
-	}
-	//---###//---###//---###//---###
-	
+function hideMenu(dontResizeMainWindowFlag) {
 	var elem = document.getElementById("menu");
-	elem.onmouseout = null;
-	elem.style.display = "none";
+	if (elem.style.display == "") {
+		elem.onmouseout = null;
+		elem.style.display = "none";
+		if (mainWebviewLoaded && trayWebviewLoaded) {
+			menuIsShowing = false;
+			if (dontResizeMainWindowFlag != true) {
+				resizeMainWindow(0);
+			}
+		}
+	}
 }
 
 
-///---###///---###///---###///---###///---###///---###
 function createMenuItem(item_num, item_name, image_url, click_func) {
 	var item_id = "menu-item" + item_num;
 	var menuItem = document.createElement("li");
@@ -229,9 +219,9 @@ function addMenuItems(menu_id) {
 			menuNode.appendChild(createMenuItem(3, "Thin Titlebar", "images/menu/menu_checked.png", menuTest3));
 			updateThinTitlebarMenuCheck();
 			
-			/* //---###///---###///---###
-			menuNode.appendChild(createMenuItem(4, "Refresh", "images/menu/menu_blank_icon.png", menuTest4));
-			*/ //---###///---###///---###
+			//---###//---###
+			////// menuNode.appendChild(createMenuItem(4, "Refresh", "images/menu/menu_blank_icon.png", menuTest4));
+			//---###//---###
 			
 			menuNode.appendChild(createMenuItem(5, "Log Out", "images/menu/menu_blank_icon.png", menuTest5));
 			if (trayWebviewLoaded == false) {
@@ -249,21 +239,20 @@ function addMenuItems(menu_id) {
 
 // Show Setting Page
 function menuTest1() {
-	hideMenu();
 	sendSettingsToWebview({ open_settings_page: true });
+	hideMenu(true);
 }
 
 
 // Show Tool Changer
 function menuTest2() {
-	hideMenu();
 	sendSettingsToWebview({ open_widget_picker: true });
+	hideMenu(true);
 }
 
 
 // Show Thin Titlebar - toggles check-mark
 function menuTest3() {
-	hideMenu();
 	var checkImageNode = document.getElementById("menu-item3-image");
 	if (checkImageNode != null) {
 		userSettingsObj.thin_titlebar = (checkImageNode.style.visibility == "hidden");
@@ -274,6 +263,7 @@ function menuTest3() {
 			sendSettingsToWebview({ changed_thin_titlebar: userSettingsObj.thin_titlebar });
 		}
 	}
+	hideMenu();
 }
 
 
@@ -287,23 +277,25 @@ function updateThinTitlebarMenuCheck() {
 
 
 // Refresh Page
+/* //---###//---###//---###//---###
 function menuTest4() {
-	hideMenu();
 	refreshPage();
+	hideMenu();
 }
+*/ //---###//---###//---###//---###
 
 
 // Log Out
 function menuTest5() {
-	hideMenu();
 	askLogOut();
+	hideMenu(true);
 }
 
 
 // Log In
 function menuTest6() {
-	hideMenu();
 	askLogIn();
+	hideMenu(true);
 }
 
 
@@ -317,7 +309,7 @@ function refreshPage() {
 
 
 function askLogOut() {
-	//if logged in, verify you want to logout
+	// if logged in, verify you want to logout
 	if ((document.body.getAttribute("data-window-type") == "main_window") && (trayWebviewLoaded)) {
 		sendSettingsToWebview({ ask_logout: true });
 	} else {
@@ -355,7 +347,7 @@ function logIn() {
 
 
 function setToIsOnTop() {
-	if (chrome.app.window.current().isMaximized()) return;   ///---###
+	if (chrome.app.window.current().isMaximized()) return;
 	
 	document.getElementById("full-titlebar-not-on-top-button").style.display = "none";
 	document.getElementById("full-titlebar-is-on-top-button").style.display = "";
@@ -477,21 +469,6 @@ function createButton(button_id, button_class_name, normal_image_url,
 	}
 	button.onclick = click_func;
 	
-	/* //##JOE
-	button.onkeydown = function(event) {
-		var ret;
-		if (event.keyCode != 13)
-			ret = true;
-		else {
-			click_func.call();
-			//ret = true;
-			ret = false;
-		}
-		return ret;
-	}
-	*/ //##JOE
-	
-	//##JOE+DK
 	button.onkeydown = function(event) {
 		if (event.keyCode != 13 && event.keyCode != 32) {
 			return true;
@@ -499,16 +476,12 @@ function createButton(button_id, button_class_name, normal_image_url,
 		click_func.call();
 		return false;
 	}
-	//##JOE+DK
 	
 	return button;
 }
 
 
 function addTitlebar(titlebar_name, titlebar_text) {
-	
-//////	debugger;
-
 	var buttonClassName = titlebar_name + "-buttons";
 	var buttonPathLeader = "images/";
 	var isMiniTitlebar = (titlebar_name == "mini-titlebar");
@@ -519,16 +492,16 @@ function addTitlebar(titlebar_name, titlebar_text) {
 	// outer div
 	var titlebar = document.createElement("div");
 	titlebar.setAttribute("id", titlebar_name);
-	titlebar.setAttribute("class", titlebar_name);
+	////// titlebar.setAttribute("class", titlebar_name);
 	
 	// icon button
 	var iconButton = createButton(titlebar_name + "-icon-button",
 								buttonClassName,
 								buttonPathLeader + "button_icon.png",
-								buttonPathLeader + "button_icon_hover.png",
+								null,
 								null,
 								doNothing);
-	iconButton.setAttribute("tabindex", "1");   //---###//---###//---###//---###//---###//---###
+	iconButton.setAttribute("tabindex", "1");   //---###//---###
 	titlebar.appendChild(iconButton);
 	
 	// settings button
@@ -538,7 +511,7 @@ function addTitlebar(titlebar_name, titlebar_text) {
 								buttonPathLeader + "button_settings_hover.png",
 								"Menu",
 								displayMenu);
-	settingsButton.setAttribute("tabindex", "2");   //---###//---###//---###//---###//---###//---###
+	settingsButton.setAttribute("tabindex", "2");   //---###//---###
 	titlebar.appendChild(settingsButton);
 	
 	if (document.body.getAttribute("data-window-type") == "main_window") {
@@ -597,7 +570,6 @@ function addTitlebar(titlebar_name, titlebar_text) {
 		if (isMiniTitlebar == false) {
 			// text - url
 			var title = document.createElement("div");
-			//title.setAttribute("class", titlebar_name + "-text");   ///---###///---###///---###
 			title.setAttribute("id", titlebar_name + "-text");
 			title.textContent = titlebar_text;
 			titlebar.appendChild(title);
@@ -661,7 +633,6 @@ function addTitlebar(titlebar_name, titlebar_text) {
 	// screen overlay div
 	var titlebarScreen = document.createElement("div");
 	titlebarScreen.setAttribute("id", titlebar_name + "-screen");
-	titlebarScreen.setAttribute("class", "ui-widget-overlay");
 	titlebar.appendChild(titlebarScreen);
 	
 	document.body.insertBefore(titlebar, document.getElementById("menu"));
@@ -712,83 +683,39 @@ function updateTitleBars() {
 
 
 function updateTitlebarVisibility() {
-	var currWin = chrome.app.window.current();
-	if (userSettingsObj.thin_titlebar == true) {
-		if (document.getElementById("full-titlebar").style.display == "") {
-			// Hide full titlebar and show mini titlebar
-			document.getElementById("mini-titlebar").style.display = "";
-			var miniBarHeight = document.getElementById("mini-titlebar").offsetHeight;
-			var deltaH = convertToScreenPixels(miniBarHeight - document.getElementById("full-titlebar").offsetHeight);   //---### added viewportScaling factor
-			document.getElementById("full-titlebar").style.display = "none";
-			document.getElementById("menu").style.top = miniBarHeight + "px";   ///---###///---###///---###
-			document.getElementById("content").style.top = miniBarHeight + "px";
-			if (document.body.getAttribute("data-window-type") == "main_window" && currWin.isMaximized() == false) {
-				
-				//---### var oldHeight = window.outerHeight;
-				//---### window.resizeBy(0, deltaH);
-				//---### window.moveBy(0, oldHeight - window.outerHeight);
-				
-				//---###//---###//---###//---###
-				var oldHeight = window.outerHeight;
-				var oldBottomY = window.screenY + oldHeight;
-				var newHeight = oldHeight + deltaH;
-				if (newHeight >= 100) {
-					window.resizeBy(0, deltaH);
-					window.moveBy(0, oldHeight - window.outerHeight);
-				} else {
-					var newBounds = currWin.outerBounds;
-					newBounds.height = newHeight;
-					newBounds.top = oldBottomY - newHeight;
-					currWin.outerBounds.newBounds;
-				}
-				//---###//---###//---###//---###
-				
-			/*
-			} else {
-				sendWindowHeightInfoToWebview();
-			}
-			*/
-			}
-			sendWindowHeightInfoToWebview();
-		}
-		
-	} else if (document.getElementById("full-titlebar").style.display == "none") {
+	var titlebarHeight;
+	var deltaH;
+	if (userSettingsObj.thin_titlebar == true && document.getElementById("full-titlebar").style.display == "") {
+		// Hide full titlebar and show mini titlebar
+		document.getElementById("mini-titlebar").style.display = "";
+		titlebarHeight = document.getElementById("mini-titlebar").offsetHeight;
+		deltaH = convertToScreenPixels(titlebarHeight - document.getElementById("full-titlebar").offsetHeight);   //---### added viewportScaling factor
+		document.getElementById("full-titlebar").style.display = "none";
+	} else if (userSettingsObj.thin_titlebar != true && document.getElementById("full-titlebar").style.display == "none") {
 		// Hide mini titlebar and show full titlebar
 		document.getElementById("full-titlebar").style.display = "";
-		var fullBarHeight = document.getElementById("full-titlebar").offsetHeight;
-		var deltaH = convertToScreenPixels(fullBarHeight - document.getElementById("mini-titlebar").offsetHeight);   //---### added viewportScaling factor
+		titlebarHeight = document.getElementById("full-titlebar").offsetHeight;
+		deltaH = convertToScreenPixels(titlebarHeight - document.getElementById("mini-titlebar").offsetHeight);   //---### added viewportScaling factor
 		document.getElementById("mini-titlebar").style.display = "none";
-		document.getElementById("menu").style.top = fullBarHeight + "px";   ///---###///---###///---###
-		document.getElementById("content").style.top = fullBarHeight + "px";
-		if (document.body.getAttribute("data-window-type") == "main_window" && currWin.isMaximized() == false) {
-			
-			//---### var oldHeight = window.outerHeight;
-			//---### window.resizeBy(0, deltaH);
-			//---### window.moveBy(0, oldHeight - window.outerHeight);
-			
-			//---###//---###//---###//---###
-			var oldHeight = window.outerHeight;
-			var oldBottomY = window.screenY + oldHeight;
-			var newHeight = oldHeight + deltaH;
-			if (newHeight >= 100) {
-				window.resizeBy(0, deltaH);
-				window.moveBy(0, oldHeight - window.outerHeight);
-			} else {
-				var newBounds = currWin.outerBounds;
-				newBounds.height = newHeight;
-				newBounds.top = oldBottomY - newHeight;
-				currWin.outerBounds.newBounds;
-			}
-			//---###//---###//---###//---###
-			
-		/*
-		} else {
-			sendWindowHeightInfoToWebview();
-		}
-		*/
-		}
-		sendWindowHeightInfoToWebview();
+	} else {
+		return;
 	}
+	
+	document.getElementById("menu").style.top = titlebarHeight + "px";
+	document.getElementById("content").style.top = titlebarHeight + "px";
+	
+	var currWin = chrome.app.window.current();
+	if (document.body.getAttribute("data-window-type") == "main_window" && trayWebviewLoaded == true && currWin.isMaximized() == false) {
+		/*
+		var newBounds = currWin.outerBounds;
+		newBounds.height = newWindowHeight;
+		newBounds.top = newTopY;
+		currWin.outerBounds.newBounds;
+		*/
+		currWin.outerBounds.setSize(undefined, window.outerHeight + deltaH);
+		currWin.outerBounds.setPosition(undefined, window.screenY - deltaH);
+	}
+	
 }
 
 
@@ -798,7 +725,9 @@ function hideLogStatus() {
 		document.getElementById("full-titlebar-loggedOut-button").style.display = "none";
 		document.getElementById("mini-titlebar-loggedIn-button").style.display = "none";
 		document.getElementById("mini-titlebar-loggedOut-button").style.display = "none";
+		
 		document.getElementById("full-titlebar-text1").textContent = NameOfProgram;
+		////// document.getElementById("full-titlebar-text1").textContent = NameOfProgram + " \xA0 (version " + chrome.runtime.getManifest().version + ")";
 	}
 }
 
@@ -844,61 +773,88 @@ function setToLoggedOut(msg) {
 
 
 function focusTitlebars(focus) {
+	/*
 	var bg_color = focus ? titlebarFocusColor : titlebarNotFocusColor;
 	document.getElementById("full-titlebar").style.backgroundColor = bg_color;
 	document.getElementById("mini-titlebar").style.backgroundColor = bg_color;
 	document.getElementById("content").style.borderColor = bg_color;
+	*/
+	document.body.setAttribute("class", (focus ? "oatts-has-focus" : "oatts-not-focus"));
 }
 
 
-window.onfocus = function() { 
+window.onfocus = function() {
 	focusTitlebars(true);
+	document.getElementById("web-page-frame").focus();   //---###//---###//---### added 6 May 2015
 }
 
 
-window.onblur = function() { 
+window.onblur = function() {
 	focusTitlebars(false);
 }
 
 
-function resizeMainWindow(minDialogWindowHeight) {
-	if (chrome.app.window.current().isMaximized() == true || chrome.app.window.current().isMinimized() == true) return;
-	
+function titlebarFrameHeight() {
 	var titlebarHeight = document.getElementById("full-titlebar").offsetHeight;
 	if (document.getElementById("full-titlebar").style.display == "none") {
 		titlebarHeight = document.getElementById("mini-titlebar").offsetHeight;
 	}
+	//// return convertToScreenPixels(titlebarHeight + document.getElementById("content").offsetLeft);
+	return convertToScreenPixels(window.innerHeight - document.getElementById("content").offsetHeight);   //---###   TEST   TEST		
 	
-	var newWindowHeight = titlebarHeight + windowSettingsObj.tray_height + outerFrameWidth;
+}
+
+
+function resizeMainWindow(minDialogWindowHeight) {
+	if (chrome.app.window.current().isMaximized() == true || chrome.app.window.current().isMinimized() == true) {
+		return;
+	}
+	
+	var newWindowWidth = windowSettingsObj.window_width;
+	var newWindowHeight = titlebarFrameHeight() + windowSettingsObj.tray_height;
 	if (popupPanelShowing == true) {
+		newWindowWidth = windowSettingsObj.popup_window_width;
 		newWindowHeight = newWindowHeight + windowSettingsObj.popup_height;
 	}
 	if ((dialogIsShowing == true || menuIsShowing == true) && minDialogWindowHeight > 0) {
-		newWindowHeight = titlebarHeight + minDialogWindowHeight + 2 + outerFrameWidth;
+		newWindowHeight = titlebarFrameHeight() + minDialogWindowHeight + 2;
 	}
 	
-	newWindowHeight = convertToScreenPixels(newWindowHeight);   //---### added viewportScaling factor
+	setSizeMainWindow(windowSettingsObj.screen_left_x, windowSettingsObj.screen_bottom_y, newWindowWidth, newWindowHeight);
+}
+
+
+function setSizeMainWindow(leftX, bottomY, newWindowWidth, newWindowHeight) {
+	var currWin = chrome.app.window.current();
+	if (currWin.isMaximized() == true || currWin.isMinimized() == true) {
+		return;
+	}
 	
-	if ((dialogIsShowing == false && menuIsShowing == false) || window.outerHeight < newWindowHeight) {
-		
-		//---### var bottomY = window.screenY + window.outerHeight;
-		//---### window.resizeTo(window.outerWidth, newWindowHeight);
-		//---### window.moveTo(window.screenX, bottomY - newWindowHeight);
-		
-		//---###//---###//---###//---###
-		var bottomY = window.screenY + window.outerHeight;
-		if (newWindowHeight >= 100) {
-			window.resizeTo(window.outerWidth, newWindowHeight);
-			window.moveTo(window.screenX, bottomY - newWindowHeight);
-		} else {
-			var currWin = chrome.app.window.current();
-			var newBounds = currWin.outerBounds;
-			newBounds.height = newWindowHeight;
-			newBounds.top = bottomY - newWindowHeight;
-			currWin.outerBounds.newBounds;
-		}
-		//---###//---###//---###//---###
-		
+	var newMinHeight = titlebarFrameHeight() + Math.round(Math.max(27, 15 * frame2WebviewPixelRatio));
+	if (popupPanelShowing == true || trayWebviewLoaded == false) {
+		newMinHeight = titlebarFrameHeight() + 250;
+	}
+	
+	newMinHeight = Math.min(newMinHeight, Math.round(0.95 * screen.availHeight));
+	if (newMinHeight > newWindowHeight) {
+		newWindowHeight = newMinHeight;
+	}
+	
+	if (newMinHeight < currWin.outerBounds.minHeight) {
+		currWin.outerBounds.setMinimumSize(undefined, newMinHeight);
+	}
+	
+	newWindowHeight = Math.min(newWindowHeight, window.screen.availHeight);
+	newWindowWidth = Math.min(newWindowWidth, window.screen.availWidth);
+	if ((dialogIsShowing == false && menuIsShowing == false) || window.outerHeight < newWindowHeight || window.outerWidth < newWindowWidth) {
+		var newWindowTop = Math.max(Math.min(bottomY, window.screen.availTop + window.screen.availHeight) - newWindowHeight, window.screen.availTop);
+		var newWindowLeft = Math.max(Math.min(leftX, window.screen.availLeft + window.screen.availWidth - newWindowWidth), window.screen.availLeft);
+		currWin.outerBounds.setSize(newWindowWidth, newWindowHeight);
+		currWin.outerBounds.setPosition(newWindowLeft, newWindowTop);
+	}
+	
+	if (newMinHeight != currWin.outerBounds.minHeight) {
+		currWin.outerBounds.setMinimumSize(undefined, newMinHeight);
 	}
 }
 
@@ -912,22 +868,25 @@ function processBoundsChanged(isAndWasNormalWindow) {
 
 
 function saveMainWindowSettings(isAndWasNormalWindow) {
-	if (mainWebviewLoaded && dialogIsShowing == false && menuIsShowing == false) {
+	if (mainWebviewLoaded == true && dialogIsShowing == false && menuIsShowing == false) {
 		if (isAndWasNormalWindow) {
 			if (trayWebviewLoaded) {
-				var webviewHeight = document.getElementById("web-page-frame").offsetHeight;
+				var webviewHeight = Math.round(document.getElementById("web-page-frame").offsetHeight * frame2WebviewPixelRatio);
+				
 				if (popupPanelShowing == true) {
 					var newPopupHeight = webviewHeight - windowSettingsObj.tray_height;
-					if (newPopupHeight > 150) {
+					if (newPopupHeight >= 50) {
 						windowSettingsObj.popup_height = newPopupHeight;
 					}
+					windowSettingsObj.popup_window_width = Math.max(window.outerWidth, windowSettingsObj.window_width);
 				} else {
-					windowSettingsObj.tray_height = webviewHeight;
+					////// windowSettingsObj.tray_height = webviewHeight;   //---###//---###//---###   DISABLED TEST   TEST   TEST
+					windowSettingsObj.window_width = window.outerWidth;
+					windowSettingsObj.screen_left_x = window.screenX;
+					windowSettingsObj.screen_bottom_y = window.screenY + window.outerHeight;
+					windowSettingsObj.popup_window_width = Math.max(window.outerWidth, windowSettingsObj.popup_window_width);
 				}
 			}
-			windowSettingsObj.window_width = window.outerWidth;
-			windowSettingsObj.screen_left_x = window.screenX;
-			windowSettingsObj.screen_bottom_y = window.screenY + window.outerHeight;
 			saveWindowSettings();
 		} else if (chrome.app.window.current().isMinimized() == false) {
 			saveWindowSettings();
@@ -950,9 +909,8 @@ function saveUserSettings() {
 function sendWindowHeightInfoToWebview() {
 	sendSettingsToWebview({
 		window_height_info: {
-			webview_height: document.getElementById("web-page-frame").offsetHeight,
 			tray_height: windowSettingsObj.tray_height,
-			is_maximized: chrome.app.window.current().isMaximized()
+			show_empty_popup: (chrome.app.window.current().isMaximized() || dialogIsShowing == true || menuIsShowing == true)
 		}
 	});
 }
@@ -969,126 +927,90 @@ function sendSettingsToWebview(newSettings) {
 document.addEventListener('DOMContentLoaded', function() {
 	mainWebviewLoaded = false;
 	trayWebviewLoaded = false;
-	savedDevicePixelRatio = window.devicePixelRatio;
-
-	//##JOE
-	//look for ?ilink= for path to second window
-	//---### debugger;
 	
-	
-	/*
-	var query = "";
-	if (window.location.search.indexOf("?ilink=") == 0) {
-		query = window.location.search.substring(7);
-	}
-	if (query != "") {
-		document.getElementById("web-page-frame").src = query;
-	} else {
-		query = NameOfProgram;
-	}
-	//var res = query;
-	//##JOE
-	
-	//try {
-	//	res = document.getElementById("web-page-frame").contentWindow.location.href;
-	//} catch (e) {
-	//	res = document.getElementById("web-page-frame").src;
-	//}
-	*/
-	
-	
-	//---###//---###//---###//---###
 	var query = NameOfProgram;
-	if (document.body.getAttribute("data-window-type") == "provider_window" || document.body.getAttribute("data-window-type") == "icon_picker_window") {
+	var windowType = document.body.getAttribute("data-window-type");
+	
+	//---###//---###//---###//---###//---###//---###//---###//---###
+	console.log("Manifest version & window_type: " + chrome.runtime.getManifest().version + "  " + windowType);   //////
+	//---###//---###//---###//---###//---###//---###//---###//---###
+	
+	if (windowType == "provider_window" || windowType == "icon_picker_window") {
 		var windowId = chrome.app.window.current().id;
 		var _Offset = windowId.indexOf("_");
-		if (_Offset > 0) {
+		if (_Offset >= 0) {
 			//---### query = decodeURI(windowId.substring(_Offset + 1));
 			query = windowId.substring(_Offset + 1);
 		}
 		
-		//---###//---###//---###//---###//---###
-		if (document.body.getAttribute("data-window-type") == "icon_picker_window") {
+		//---###//---###
+		if (windowType == "icon_picker_window") {
 			query = query + "?v=" + Math.random();
 		}
-		//---###//---###//---###//---###//---###
+		//---###//---###
 		
 		document.getElementById("web-page-frame").src = query;
 	}
 	var windowTitle = query;
-	if (document.body.getAttribute("data-window-type") == "icon_picker_window") {
+	if (windowType == "icon_picker_window") {
 		windowTitle = "Bookmark Icon Picker";
 	}
-	//---###//---###//---###//---###
-	
 	
 	addTitlebar("mini-titlebar", null);
 	addTitlebar("full-titlebar", windowTitle);
 	document.getElementById("mini-titlebar").style.display = "none";
 	
 	updateTitleBars();
-	setToNotOnTop();
+	setToNotOnTop(true);
 	setToLoggedOut('');
 	document.getElementById("full-titlebar-not-on-top-button").blur();
 	
-	
-	window.addEventListener("resize", function() {
-		if (window.devicePixelRatio != savedDevicePixelRatio) {
-			savedDevicePixelRatio = window.devicePixelRatio;
-			////// if (document.body.getAttribute("data-window-type") == "main_window") {
-			if (document.body.getAttribute("data-window-type") == "main_window" && trayWebviewLoaded == true) {
-				var webviewNode = document.getElementById("web-page-frame");
-				if (webviewNode != null && document.getElementById("full-titlebar-loggedIn-button").style.display == "none") {
-					webviewNode.src = MAIN_URL;   // logged out or in demo mode, so force new login
-				} else {
-					refreshPage();
-				}
-			} else if (document.body.getAttribute("data-window-type") == "icon_picker_window") {
-				refreshPage();
-			} else {
-				var webviewNode = document.getElementById("web-page-frame");
-				if (webviewNode != null) {
-					//webviewNode.setZoom(2.0);
-					//webviewNode.setZoom(1.0);
-					//setTimeout(function() { webviewNode.style.display = "inline-block";	}, 20);					
-					//webviewNode.style.display = "none";
-				}
-			}
-			console.log("changed - devicePixelRatio: " + window.devicePixelRatio);   //---###//---###
-		}
-		
-	});
-	
-	
-	if (document.body.getAttribute("data-window-type") == "main_window") {   // running in the main window.
+	if (windowType == "main_window") {   // running in the main window.
 		var webviewNode = document.getElementById("web-page-frame");
+		
+// /* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		// Add a message listener for launch of provider windows - listen for 'newwindow' event
 		webviewNode.addEventListener('newwindow', function(e) {
 			
-			/*
-			var newUrl = "provider_window.html?ilink=" + e.targetUrl;
-			chrome.app.window.create(newUrl, {
-				id: "templateWinID" + Math.random(),
-				frame: "none",
-				alwaysOnTop: false,
-				outerBounds: { width: 800, height: 600, minWidth: 300, minHeight: 100 }
-			});
-			*/
-			
-			//---###//---###//---###//---###//---###//---###
+			//---###//---###
+			// var newUrl = "provider_window.html?ilink=" + e.targetUrl;
+			// chrome.app.window.create(newUrl, {
+			// 	id: "templateWinID" + Math.random(),
+			// 	frame: "none",
+			// 	alwaysOnTop: false,
+			// 	outerBounds: { width: 800, height: 600, minWidth: 300, minHeight: 100 }
+			// });
+			//---###//---###
 			chrome.app.window.create("provider_window.html", {
 				id: "templateWinID" + Math.random() + "_" + encodeURI(e.targetUrl),
 				frame: "none",
 				alwaysOnTop: false,
 				outerBounds: { width: 800, height: 600, minWidth: 300, minHeight: 100 }
 			});
-			//---###//---###//---###//---###//---###//---###
+			// ---###//---###
 			
 		});
 		
-		// Add a message listener function that receives and processes messages from the tray webview in the main window.
+		// Add a message listener function that receives and processes messages from all webviews in the app.
 		chrome.runtime.onMessageExternal.addListener(function(message, sender, sendResponse) {
+			if ("inner_dpr" in message) {
+				if (frame2WebviewPixelRatio != window.devicePixelRatio / message.inner_dpr) {
+				
+					var newWindowHeight = window.outerHeight + Math.round(titlebarFrameHeight() * (window.devicePixelRatio / message.inner_dpr - frame2WebviewPixelRatio));   //---###//---###//---###//---###//---###//---###
+					
+					frame2WebviewPixelRatio = window.devicePixelRatio / message.inner_dpr;
+					
+					setSizeMainWindow(window.screenX, window.screenY + window.outerHeight, window.outerWidth, newWindowHeight);   //---###//---###//---###//---###//---###//---###
+					sendWindowHeightInfoToWebview();
+					
+					//---###//---###//---###//---###//---###//---###//---###//---###
+					////// console.log("inner_dpr & frame2WebviewPixelRatio: " + message.inner_dpr + " & " + frame2WebviewPixelRatio);
+					//---###//---###//---###//---###//---###//---###//---###//---###
+					
+				}
+			}
+			
 			if ("tray_height" in message && "popup_panel_showing" in message) {
 				windowSettingsObj.tray_height = message.tray_height;
 				var popupPanelWasShowing = popupPanelShowing;
@@ -1108,38 +1030,51 @@ document.addEventListener('DOMContentLoaded', function() {
 				dialogIsShowing = (minDialogWindowHeight > 0);
 				updateTitleBars();
 				resizeMainWindow(minDialogWindowHeight);
+				
+				//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+				////// sendResponse({ response: "done" });   //---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+				//---###//---###//---###//---###//---###//---###//---###//---###//---###//---###
+				
 			}
 			
 			if ("user_settings" in message) {
+				var prevUserSettingsObj = userSettingsObj
 				userSettingsObj = message.user_settings;
 				saveUserSettings();
 				updateThinTitlebarMenuCheck();
 				updateTitlebarVisibility();
 			}
 			
-			//---###//---###//---###//---###//---###//---###
 			if ("open_icon_picker" in message) {
 				chrome.app.window.create("icon_picker_window.html", {
 					//---### id: "templateWinID" + Math.random() + "_" + encodeURI(message.open_icon_picker),
 					id: "iconPickerID" + "_" + encodeURI(message.open_icon_picker),
 					frame: "none",
 					alwaysOnTop: false,
-					outerBounds: { width: 640, height: 800, minWidth: 200, minHeight: 200 }
+					outerBounds: { width: 600, height: 600, minWidth: 300, minHeight: 300 }
 				});
-			}
-			
-			if ("widget_zoom_smaller" in message) {
-				sendSettingsToWebview({ widget_zoom_smaller: message.widget_zoom_smaller });
 			}
 			
 			if ("widget_zoom_bigger" in message) {
 				sendSettingsToWebview({ widget_zoom_bigger: message.widget_zoom_bigger });
 			}
 			
+			if ("widget_zoom_smaller" in message) {
+				sendSettingsToWebview({ widget_zoom_smaller: message.widget_zoom_smaller });
+			}
+			
+			if ("widget_zoom_default" in message) {
+				sendSettingsToWebview({ widget_zoom_default: message.widget_zoom_default });
+			}
+			
+			if ("signin_zoom_setting" in message) {
+				windowSettingsObj.signin_zoom_setting = message.signin_zoom_setting;
+				saveWindowSettings();
+			}
+			
 			if ("new_bookmark_icon" in message) {
 				sendSettingsToWebview({ new_bookmark_icon: message.new_bookmark_icon });
 			}
-			//---###//---###//---###//---###//---###//---###
 			
 			if ("request_focus" in message) {
 				if (message.request_focus == true && document.activeElement != document.getElementById("web-page-frame")) {
@@ -1147,7 +1082,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				}
 			}
 			
-			/* //////////joe */
 			// keep status updated on titlebar
 			if ("login_state" in message) {
 				if (message.login_state == "loggedIn") {
@@ -1178,9 +1112,8 @@ document.addEventListener('DOMContentLoaded', function() {
 			if ("login_program" in message) {
 				logIn();
 			}
-			/* //////////joe */
 
-			});
+		});
 		
 		// Add an event listener that runs once when the webview finishes loading in the main window.
 		// It sets the initial size and position of the window to the saved settings,
@@ -1192,7 +1125,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			dialogIsShowing = false;
 			menuIsShowing = false;
 			
-			console.log("'loadstop' EventListener triggered with " + event);   ///---###///---###
+			//---###//---###//---###//---###//---###//---###//---###//---###
+			////// console.log("'loadstop' EventListener triggered with " + event + " at " + (new Date()).getTime());
+			//---###//---###//---###//---###//---###//---###//---###//---###
 			
 			// Load saved window and pane parameters from chrome storage
 			// NOTE: chrome.storage.local.get() runs asynchronously
@@ -1204,36 +1139,24 @@ document.addEventListener('DOMContentLoaded', function() {
 					userSettingsObj = localData.user_settings;
 				}
 				
-				// Test for tray/picker page vs login/out page by checking for the existence of element "tray-container"
-				// NOTE: webview.executeScript() may (also) run asynchronously
-				document.getElementById("web-page-frame").executeScript({ code: "(document.getElementById('tray-container') != null)" }, function(runResult) {
-					trayWebviewLoaded = (runResult[0] == true);   // test for tray/picker page vs login page
-					var startHeight = loginStartHeight;
-					if (trayWebviewLoaded == true) {
-						startHeight = document.getElementById("full-titlebar").offsetHeight + windowSettingsObj.tray_height + outerFrameWidth;
-					}
-					
-					savedDevicePixelRatio = window.devicePixelRatio;
-					// console.log("new viewport zoom scale: " + savedDevicePixelRatio);   //---###//---###
-					startHeight = convertToScreenPixels(startHeight);
+				// Test for tray/picker page vs login/out page by checking for the existence of element "tray-container",
+				// and get the initial value of the webview's window.devicePixelRatio to set frame2WebviewPixelRatio
+				// NOTE: webview.executeScript() also runs asynchronously
+				var codeToRun = "tmp = { tray_loaded: (document.getElementById('tray-container') != null), inner_dpr: window.devicePixelRatio }"
+				document.getElementById("web-page-frame").executeScript({ code: codeToRun }, function(runResult) {
+					updateTitlebarVisibility();
+					trayWebviewLoaded = (runResult[0].tray_loaded == true);   // test for tray/picker page vs login page
+					frame2WebviewPixelRatio = window.devicePixelRatio / runResult[0].inner_dpr;
 					
 					var currWin = chrome.app.window.current();
 					if (currWin.isMaximized() == false) {
-						
-						//---### window.resizeTo(windowSettingsObj.window_width, startHeight);
-						//---### window.moveTo(windowSettingsObj.screen_left_x, windowSettingsObj.screen_bottom_y - startHeight);
-						
-						//---###//---###//---###//---###
-						if (startHeight >= 100) {
-							window.resizeTo(windowSettingsObj.window_width, startHeight);
-							window.moveTo(windowSettingsObj.screen_left_x, windowSettingsObj.screen_bottom_y - startHeight);
+						if (trayWebviewLoaded == true) {
+							setSizeMainWindow(windowSettingsObj.screen_left_x, windowSettingsObj.screen_bottom_y,
+								windowSettingsObj.window_width, titlebarFrameHeight() + windowSettingsObj.tray_height);
 						} else {
-							var newBounds = currWin.outerBounds;
-							newBounds.height = startHeight;
-							newBounds.top = windowSettingsObj.screen_bottom_y - startHeight;
-							currWin.outerBounds.newBounds;
+							var windowScale = 0.35 + windowSettingsObj.signin_zoom_setting / 300;
+							setSizeMainWindow(windowSettingsObj.screen_left_x, windowSettingsObj.screen_bottom_y, Math.round(loginStartWidth * windowScale), Math.round(loginStartHeight * windowScale));
 						}
-						//---###//---###//---###//---###
 						
 						if (windowSettingsObj.is_maximized == true) {
 							currWin.maximize();
@@ -1241,12 +1164,17 @@ document.addEventListener('DOMContentLoaded', function() {
 					}
 					
 					updateThinTitlebarMenuCheck();
-					//---###//---###//---###//---### updateTitlebarVisibility();
 					updateTitleBars();
 					
-					sendSettingsToWebview({ app_id: chrome.runtime.id, window_settings: windowSettingsObj, login_status: false });  //***********joe added login_status *//
-					sendSettingsToWebview({ user_settings: userSettingsObj });
+					var versionInfo = { version_name: chrome.runtime.getManifest().name, version_num: chrome.runtime.getManifest().version };
+					sendSettingsToWebview({ app_id: chrome.runtime.id, version_info: versionInfo, window_settings: windowSettingsObj, login_status: false });
+					////// sendSettingsToWebview({ user_settings: userSettingsObj });
+					sendSettingsToWebview({ guest_mode_override: (chrome.runtime.getManifest().name.indexOf("{MakesGuests}") >= 0), user_settings: userSettingsObj });
+					
 					sendWindowHeightInfoToWebview();
+					if (trayWebviewLoaded == false) {
+						sendSettingsToWebview({ signin_zoom_setting: windowSettingsObj.signin_zoom_setting });
+					}
 					
 					// Add onBoundsChanged event listener here, after all window and page loading and configuring has been competed.
 					chrome.app.window.current().onBoundsChanged.addListener(function() {
@@ -1276,29 +1204,38 @@ document.addEventListener('DOMContentLoaded', function() {
 								setToNotOnTop(true);
 							}
 							updateTitleBars();
-							if (wasMaximized == true && isMaximized == false && isMinimized == false) {
+							
+							////// if (wasMaximized == true && isMaximized == false && isMinimized == false) {
+							if (wasMaximized == true && isMaximized == false && isMinimized == false &&  trayWebviewLoaded == true) { //---###//---###//---###
+							
 								resizeMainWindow(0);
 							}
 						}
 						
 					});   // end of chrome.app.window.current().onBoundsChanged.addListener(function() { ...
 					
-					mainWebviewLoaded = (document.body.getAttribute("data-window-type") == "main_window");
+					mainWebviewLoaded = (windowType == "main_window");
 					addMenuItems("menulist");
 					
 				});   // end of document.getElementById("web-page-frame").executeScript({ ... }, function( ... ) { ...
 				
 			});   // end of chrome.storage.local.get(null, function( ... ) { ...
 			
+			document.getElementById("web-page-frame").blur();
+			document.getElementById("web-page-frame").focus();
+			
 		});   // end of webviewNode.addEventListener("loadstop", function( ... ) { ...
 		
 		// Set webview source to load main page now that all the listeners are setup and things initialized
 		webviewNode.src = MAIN_URL;   //##JOE
+		//---### webviewNode.src = MAIN_PATH + "test.html"  //---###//---###//---###//---###   TEMP TEST !!!!   //---###//---###//---###//---###
 		
-	//---### } else if (document.body.getAttribute("data-window-type") == "provider_window") {   // running in the provider window.
-	} else if (document.body.getAttribute("data-window-type") == "provider_window" || document.body.getAttribute("data-window-type") == "icon_picker_window") {
+// */ ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		if (document.body.getAttribute("data-window-type") == "icon_picker_window") {
+	//---### } else if (windowType == "provider_window") {   // running in the provider window.
+	} else if (windowType == "provider_window" || windowType == "icon_picker_window") {
+		
+		if (windowType == "icon_picker_window") {
 			// Running in the icon picker window, so establish two-way communication
 			// between the icon picker window webview and the main window instance of titlebar.
 			
@@ -1321,12 +1258,26 @@ document.addEventListener('DOMContentLoaded', function() {
 				chrome.storage.local.get(null, function(localData) {
 					var iconPickerZoom = 100;
 					if ("user_settings" in localData) {
-						var userSettingsObj = localData.user_settings;
+						
+						////// var userSettingsObj = localData.user_settings;
+						userSettingsObj = localData.user_settings;    //---###//---###//---###
+						
 						if ("widgets_zoom_setting" in userSettingsObj) {
-							iconPickerZoom = userSettingsObj.widgets_zoom_setting;   //---###//---###//---###//---###
+							iconPickerZoom = userSettingsObj.widgets_zoom_setting;
 						}
+						updateThinTitlebarMenuCheck();
+						updateTitlebarVisibility();
 					}
-					sendSettingsToWebview({ app_id: chrome.runtime.id, widgets_zoom_setting: iconPickerZoom });
+					sendSettingsToWebview({ app_id: chrome.runtime.id, user_settings: userSettingsObj, widgets_zoom_setting: iconPickerZoom });
+					
+					//---###//---###//---###//---###
+					if (document.getElementById("loading-background") != null) {
+						document.getElementById("loading-background").style.display = "none"
+					}
+					//---###//---###//---###//---###
+					
+					document.getElementById("web-page-frame").blur();
+					document.getElementById("web-page-frame").focus();
 				});
 			});
 		}
@@ -1334,7 +1285,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Add onBoundsChanged event listener for provider window or icon picker window.
 		chrome.app.window.current().onBoundsChanged.addListener(function() {
 			if (chrome.app.window.current().isMaximized()) {
-				setToNotOnTop();
+				setToNotOnTop(true);
 			}
 			updateTitleBars();
 		});
@@ -1342,6 +1293,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		// Add menu for provider window or icon picker window
 		addMenuItems("menulist");
 		
-	}   // end of if (document.body.getAttribute("data-window-type") == "main_window")
+	}   // end of if (windowType == "main_window")
 	
 });   // end of document.addEventListener('DOMContentLoaded', function() { ...

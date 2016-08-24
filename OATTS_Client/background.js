@@ -24,7 +24,7 @@ function runApp() {
 		id: "mainwin",
 		alwaysOnTop: false,
 		frame: "none",
-		outerBounds: { width: 800, height: 600, minWidth: 300, minHeight: 50 }
+		outerBounds: { width: 800, height: 600, minWidth: 300, minHeight: 55 }
 	});
 }
 
